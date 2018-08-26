@@ -1,0 +1,197 @@
+# Table of Contents
+<!-- TOC -->
+
+- [Table of Contents](#table-of-contents)
+
+<!-- /TOC -->
+# HowTo Build a custom Confluence 6 docker image with a public dockerhub image as a base
+* Origin Dockerfile based on the following dockerhub repo: https://hub.docker.com/r/atlassian/confluence-server/
+* The image is built in a Jenkins Slave with docker + oc tools installed. **It is not built inside OpenShift**  (you won't see **confluence6-atlassian-xx-build** in the ouput of **oc get pods**)
+* The built image can be pushed to a private repo in Dockerhub or to Openshift Registry. This is achieved via a Conditional Build Step in the Jenkinsfile. 
+* If you don't have admin rights in your laptop to install Docker for Windows, ask your company to install Virtualbox instead. A Desktop Test Environment can be a Virtual Machine with at least 4GB of RAM running in your laptop with Virtualbox:
+    * Virtual Machine Option 1 - Docker Toolbox: https://docs.docker.com/toolbox/overview/
+    * Virtual Machine Option 2 - Fedora Osbox: https://www.osboxes.org/fedora/
+    * etc.
+
+## Files in this repo
+* **confluence6-docker-build.Jenkinsfile**: Declarative Jenkinsfile for building and uploading the image to **Openshift-DEV, Dockerhub and Openshift-PROD**.
+
+## Configuration
+### Jenkins Slave Requirements
+- OC tools + docker installed
+
+### Openshift Requirements
+- Run confluence with arbitrary ID (see "Support Arbitrary User IDs" reference)
+    - Arbitrary User IDs: For an image to support running as an arbitrary user, directories and files that may be written to by processes in the image should be owned by the root group and be read/writable by that group. Files to be executed should also have group execute permissions.
+    - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image.
+    - **S2I (not used here in this Confluence6 Dockerfile)**: If your S2I image does not include a USER declaration with a numeric user, your builds will fail by default. In order to allow images that use either named users or the root (0) user to build in OpenShift Container Platform, you can add the project’s builder service account (system:serviceaccount:your-project:builder) to the privileged security context constraint (SCC). Alternatively, you can allow all images to run as any user. https://docs.openshift.com/container-platform/3.6/creating_images/guidelines.html 
+    - Example of One-click jenkins Dockerfile:
+    ```
+        USER 1001
+        ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+        CMD ["/usr/libexec/s2i/run"]
+    ```
+- Confluence process needs to be run within the container with a non-root User ID that belongs to a root/adm group (required to have write access to Confluence Home)
+- $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process)
+
+### Docker Engine running in your development environment
+- Requirement: $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions. 
+- $CONFLUENCE_HOME is a volume in the confluence image, so its permissions could come from the host (outside the container).
+- **Notice: When mouting a directory from the host into the container, ensure that the mounted directory has the appropriate permissions and that the owner and group of the directory matches the user UID or name which is running inside the container.**
+- Solution: Make sure the host directory (filesystem/volume with confluence persistent data in the docker engine) is setup with the following permissions: 
+```
+    chmod 775 /var/confluence6
+```
+These permissions will also be applied inside the container in the corresponding mapped filesystem (/var/atlassian/application-data/confluence)
+
+## Pulling and running the container
+
+```
+    docker login  
+    docker stop confluence6
+    docker rm confluence6
+    docker pull <username>/confluence6
+    docker run -v /var/confluence6:/var/atlassian/application-data/confluence --name="confluence6" -d -p 8090:8090 -p 8091:8091 cd/confluence6
+```
+## Running and connecting Frontend container and Backend container 
+We need to connect Confluence and Postgresql containers running the same default "bridge" network (--net=bridge):
+```
+systemctl restart docker
+
+docker stop confluence6
+docker rm confluence6
+docker pull <username>/confluence6
+docker run -v /var/confluence6:/var/atlassian/application-data/confluence --name="confluence6" -d -e 'JVM_MINIMUM_MEMORY=2048m' -e 'JVM_MAXIMUM_MEMORY=2048m' -p 8090:8090 -p 8091:8091 --net=bridge cd/confluence6
+
+docker stop postgres
+docker rm postgres
+docker pull centos/postgresql-96-centos7  
+docker run -v /var/postgres:/var/lib/postgresql/data --name postgres -d -e 'POSTGRESQL_USER=confluence' -e 'POSTGRESQL_PASSWORD=confluence' -e 'POSTGRESQL_DATABASE=confluence' -p 5432:5432 --net=bridge centos/postgresql-96-centos7
+```
+## How to Debug in our Virtualbox Development environment with Docker engine
+**Note:** The author of this README lacks of admin permissions to install Docker in his Windows laptop. On the other hand Virtualbox is already provided by his Company. The following command also apply in Docker for Windows.
+```
+docker ps -a
+docker logs <container_name>
+docker exec -it <container_name> bash
+```
+
+## Testing connectivity from confluence6 container to postgresql container
+Linux networking tools like "ifconfig" or "ip address show" (iptools) are not available in some containers like this one with postgres. Instead docker tools are used from Docker host:
+
+### Getting IP address of PostgreSQL container
+```
+docker network ls
+docker inspect postgres | grep IPAddress
+```
+### Testing connectivity from Confluence6 container towards PostgresSQL container
+Telnet and ping are not available in most containers:
+```  
+docker exec -it confluence6 bash
+cat < /dev/tcp/<postgres_ip>/5432
+```
+
+## How to Debug in Openshift when a deployment fails
+### Examples:
+```
+oc get pods -n <openshift-namespace> | grep ^confluence6
+oc get pods -n <openshift-namespace> | grep ^postgresq
+oc describe pod <pod-id> 
+oc describe pod confluence6-atlassian-39-deploy
+oc describe pod/confluence6-atlassian-40-s1s90
+oc logs pod <pod-id>
+oc logs pod/<pod-id>
+oc logs pod/confluence6-atlassian-13-868wb -n <openshift-namespace>
+oc logs pod/confluence6-atlassian-39-deploy -n <openshift-namespace>
+oc get is -n <openshift-namespace>
+oc get is
+oc delete po,dc,rc,svc,route -n <openshift-namespace> <myapp>
+```
+
+```
+oc get pods -n <openshift-namespace> | grep confluence6
+```
+
+```
+confluence6-atlassian-13-868wb             0/1       ImagePullBackOff   0          4d
+```
+
+Force delete POD:
+
+```
+user@host:~> oc delete pod confluence6-atlassian-13-868wb --force=true --grace-period=0
+warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod "confluence6-atlassian-13-868wb" deleted
+```
+
+```
+confluence6-atlassian-13-swbff             0/1       ErrImagePull   0          1m
+```
+
+```
+user@host:~> oc delete pod confluence6-atlassian-13-swbff --force=true --grace-period=0
+warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod "confluence6-atlassian-13-swbff" deleted
+```
+
+Openshift not able to pull the image from internal exposed registry:
+
+```
+use@host:~> oc logs pod/confluence6-atlassian-40-tj03j -n <openshift-namespace>
+Error from server (BadRequest): container "confluence6-atlassian" in pod "confluence6-atlassian-40-tj03j" is waiting to start: image can't be pulled
+```
+
+# External References
+* [Docker Pipeline Plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Pipeline+Plugin): Allows to build and use Docker containers from pipelines.
+    * [plugins.jenkins.io: Docker Pipeline plugin](https://plugins.jenkins.io/docker-workflow)
+    * [github.com: Docker Workflow Plugin](https://github.com/jenkinsci/docker-workflow-plugin)
+* [jenkins.io: Building docker images with Jenkins Declarative Pipeline](https://jenkins.io/doc/book/pipeline/syntax/#agent)
+* [jenkins.io: **User Docker with Pipeline. Using a custom registry**](https://jenkins.io/doc/book/pipeline/docker/)
+* [jenkins.io: **Converting conditional to pipeline**](https://jenkins.io/blog/2017/01/19/converting-conditional-to-pipeline/)
+* [Dzone.com: Declarative Pipeline Refcard](https://dzone.com/refcardz/declarative-pipeline-with-jenkins)
+* [Cloudbees: Declarative Pipeline Quick Reference](https://www.cloudbees.com/sites/default/files/declarative-pipeline-refcard.pdf)
+* [Dzone.com: Continuous Delivery with Jenkins workflow](https://dzone.com/refcardz/continuous-delivery-with-jenkins-workflow)
+* [Reddit.com: jenkinsci](https://www.reddit.com/r/jenkinsci/)
+* [Stackoverflow.com: Cannot download Docker images behind a proxy](https://stackoverflow.com/questions/23111631/cannot-download-docker-images-behind-a-proxy)
+* [blog.openshift.com: Getting Started With Docker Registry](https://blog.openshift.com/getting-started-docker-registry/)
+* [docs.docker.com: HTTP/HTTPS proxy with docker](https://docs.docker.com/config/daemon/systemd/#runtime-directory-and-storage-driver)
+* [docker.com: How do I enable 'debug' logging of the Docker daemon?](https://success.docker.com/article/how-do-i-enable-debug-logging-of-the-docker-daemon)
+* [docs.docker.com: Log in to a Docker registry](https://docs.docker.com/engine/reference/commandline/login/)
+* [serverfault.com: How can I debug a docker container initialization?](https://serverfault.com/questions/596994/how-can-i-debug-a-docker-container-initialization)
+* [Stackoverflow.com: Docker - Network calls fail during image build on corporate network](https://stackoverflow.com/questions/24151129/docker-network-calls-fail-during-image-build-on-corporate-network/)
+* [docs.docker.com: docker build](https://docs.docker.com/edge/engine/reference/commandline/build/)
+* [alpinelinux.org mirrors](http://dl-cdn.alpinelinux.org/alpine/MIRRORS.txt)
+* [cloudbees.com: Declarative pipeline refcard](https://www.cloudbees.com/sites/default/files/declarative-pipeline-refcard.pdf)
+* [docs.openshift.com: **Creating Images in Openshift. Support Arbitrary User IDs**](https://docs.openshift.com/container-platform/3.9/creating_images/guidelines.html)
+* [OKD - docs.okd.io: **Creating images in Openshift. Support Arbitrary User IDs**](https://docs.okd.io/latest/creating_images/guidelines.html)
+* [**OKD: The Origin Community Distribution of Kubernetes that powers Red Hat OpenShift**](https://www.okd.io/)
+* [blog.openshift.com: Deploying Applications from Images in OpenShift, Part One: Web Console](https://blog.openshift.com/deploying-applications-from-images-in-openshift-part-one-web-console/)
+* [blog.openshift.com: Getting any Docker image running in your own OpenShift cluster](https://blog.openshift.com/getting-any-docker-image-running-in-your-own-openshift-cluster/)
+* [blog.openshift.com: Deploying Images from Docker Hub](https://blog.openshift.com/deploying-images-from-dockerhub/)
+* [docs.docker.com: Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+* [stackoverflow.com: How can I keep container running on Kubernetes?](https://stackoverflow.com/questions/31870222/how-can-i-keep-container-running-on-kubernetes)
+* [docs.openshift.com: POD security context](https://docs.openshift.com/container-platform/3.4/install_config/persistent_storage/pod_security_context.html)
+* [kubernetes.io: **How to Debug Services in Openshift Kubernetes**](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)
+* [blog.openshift.com: **Openshift Debugging**](https://blog.openshift.com/openshift-debugging-101/)
+* [docs.openshift.com: Openshift Routes](https://docs.openshift.com/container-platform/3.9/dev_guide/routes.html)
+* [Atlassian.com: **Confluence Database Configuration**](https://confluence.atlassian.com/display/DOC/Database+Configuration)
+* [Atlassian.com: **Confluence 6 Supported Platforms**](https://confluence.atlassian.com/doc/supported-platforms-207488198.html)
+* [Atlassian.com: Confluence 6 System Requirements](https://confluence.atlassian.com/doc/system-requirements-126517514.html)
+* [Atlassian.com: **Confluence 6 database setup for postgresql**](https://confluence.atlassian.com/doc/database-setup-for-postgresql-173244522.html)
+* [**forums.docker.com**](https://forums.docker.com/)
+* [**Docker community Slack channel**](https://blog.docker.com/2016/11/introducing-docker-community-directory-docker-community-slack/)
+* [Dzone.com Refcard: **Getting started with Docker**](https://dzone.com/refcardz/getting-started-with-docker-1)
+* [Stackoverflow: How to debug "imagePullBackOff" in Openshift](https://stackoverflow.com/questions/34848422/how-to-debug-imagepullbackoff)
+* [PodCTL Podcast: Containers | Kubernetes | OpenShift](https://player.fm/series/series-2285897) 
+* [PodCTL Podcast: How to Deploy Applications to Kubernetes - Containers | Kubernetes | OpenShift](https://player.fm/1qzdsg) 
+* [PodCTL Podcast: **Container Registries - Containers | Kubernetes | OpenShift**](https://player.fm/1saEDR) 
+* [keyholesoftware.com: Managing docker containers with openshift and kubernetes](https://keyholesoftware.com/2017/12/06/managing-docker-containers-with-openshift-and-kubernetes/)
+* [Dzone.com: Openshift quick start](https://dzone.com/articles/openshift-quick-start)
+* [Dzone.com: Deploying images to openshift](https://dzone.com/articles/deploying-docker-images-to-openshift)
+* [Dzone.com: Understanding openshift security context constrain](https://dzone.com/articles/understanding-openshift-security-context-constrain)
+* [Dzone.com: A hands on with openshift 3.6](https://dzone.com/articles/a-hands-on-with-openshift-36-rc)
+* [Dzone.com: A quick guide to deploying java apps on openshift](https://dzone.com/articles/a-quick-guide-to-deploying-java-apps-on-openshift)
+* [Dzone.com: Troubleshooting java applications on openshift](https://dzone.com/articles/troubleshooting-java-applications-on-openshift)
+* [Openshift cheat-sheet 1](https://github.com/nekop/openshift-sandbox/blob/master/docs/command-cheatsheet.md)
+* [Openshift cheat-sheet 2](https://developers.redhat.com/cheat-sheets/red-hat-openshift-container-platform/)
+* [**Connecting docker containers**](https://blog.csainty.com/2016/07/connecting-docker-containers.html)
