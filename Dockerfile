@@ -3,7 +3,7 @@ FROM anapsix/alpine-java:8_jdk
 MAINTAINER Atlassian Confluence
 
 ENV RUN_USER           1001
-ENV RUN_GROUP          daemon
+ENV RUN_GROUP          root
 
 ENV UID ${RUN_USER}
 
@@ -50,10 +50,12 @@ RUN chmod +x /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.2.4.
 RUN rm /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.1.1.jar
 
 # Support Arbitrary User IDs (Reference: OpenShift Container Platform 3.9 Image Creation Guide):
-RUN chgrp -R 0 ${CONFLUENCE_INSTALL_DIR}/
-RUN chgrp -R 0 ${CONFLUENCE_HOME}/ 
-RUN chmod -R 775 ${CONFLUENCE_INSTALL_DIR}/ 
-RUN chmod -R 775 ${CONFLUENCE_HOME}/
+run chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_HOME}
+#RUN chgrp -R 0 ${CONFLUENCE_INSTALL_DIR}
+#RUN chgrp -R 0 ${CONFLUENCE_HOME} 
+RUN chmod -R 775 ${CONFLUENCE_INSTALL_DIR} 
+RUN chmod -R 775 ${CONFLUENCE_HOME}
+RUN chmod g-s ${CONFLUENCE_HOME}
 RUN chmod g=u /etc/passwd
 USER 1001  
 # End of Support Arbitrary User IDs
