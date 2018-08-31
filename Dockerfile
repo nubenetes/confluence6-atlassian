@@ -53,7 +53,7 @@ RUN rm /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.1.1.jar
 RUN chgrp -R 0 ${CONFLUENCE_INSTALL_DIR}/
 RUN chgrp -R 0 ${CONFLUENCE_HOME}/ 
 RUN chmod -R 775 ${CONFLUENCE_INSTALL_DIR}/ 
-RUN chmod -R ${CONFLUENCE_HOME}/
+RUN chmod -R 775 ${CONFLUENCE_HOME}/
 RUN chmod g=u /etc/passwd
 USER 1001  
 # End of Support Arbitrary User IDs
