@@ -1,7 +1,22 @@
 # Table of Contents
 <!-- TOC -->
-
 - [Table of Contents](#table-of-contents)
+- [HowTo Build a custom Confluence 6 docker image with a public dockerhub image as a base](#howto-build-a-custom-confluence-6-docker-image-with-a-public-dockerhub-image-as-a-base)
+    - [Alternatives: Other Docker images for Confluence 6 on Openshift](#alternatives-other-docker-images-for-confluence-6-on-openshift)
+    - [Files in this repo](#files-in-this-repo)
+    - [Configuration](#configuration)
+        - [Jenkins Slave Requirements](#jenkins-slave-requirements)
+        - [Openshift Requirements](#openshift-requirements)
+        - [Docker Engine running in your development environment](#docker-engine-running-in-your-development-environment)
+    - [Pulling and running the container](#pulling-and-running-the-container)
+    - [Running and connecting Frontend container and Backend container](#running-and-connecting-frontend-container-and-backend-container)
+    - [How to Debug in our Virtualbox Development environment with Docker engine](#how-to-debug-in-our-virtualbox-development-environment-with-docker-engine)
+    - [Testing connectivity from confluence6 container to postgresql container](#testing-connectivity-from-confluence6-container-to-postgresql-container)
+        - [Getting IP address of PostgreSQL container](#getting-ip-address-of-postgresql-container)
+        - [Testing connectivity from Confluence6 container towards PostgresSQL container](#testing-connectivity-from-confluence6-container-towards-postgressql-container)
+    - [How to Debug in Openshift when a deployment fails](#how-to-debug-in-openshift-when-a-deployment-fails)
+        - [Examples:](#examples)
+- [External References](#external-references)
 
 <!-- /TOC -->
 # HowTo Build a custom Confluence 6 docker image with a public dockerhub image as a base
