@@ -37,7 +37,7 @@ if [ "${UID}" -eq 0 ]; then
     exec su -s /bin/bash "${RUN_USER}" -c "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh $@"
 else
     echo "User is not root, changing permissions just in case"
-    chmod g-s "${CONFLUENCE_HOME}"
+    #chmod g-s "${CONFLUENCE_HOME}" -> chmod: operation not permitted
     exec "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
 fi
 
