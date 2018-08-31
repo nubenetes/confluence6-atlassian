@@ -13,6 +13,12 @@
     * Virtual Machine Option 2 - Fedora Osbox: https://www.osboxes.org/fedora/
     * etc.
 
+## Alternatives: Other Docker images for Confluence 6 on Openshift 
+- https://github.com/mwaeckerlin/confluence : The Confluence docker image provided by Atlassian does not run on OpenShift due to the access rights. This image does. Also it is setup in a simpler way, than the original and about 100MB smaller in size.
+- https://github.com/loa/openshift-confluence/blob/master/Dockerfile
+- https://github.com/opendevstack/ods-core
+- etc
+
 ## Files in this repo
 * **confluence6-docker-build.Jenkinsfile**: Declarative Jenkinsfile for building and uploading the image to **Openshift-DEV, Dockerhub and Openshift-PROD**.
 
