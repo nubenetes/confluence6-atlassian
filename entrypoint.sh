@@ -57,6 +57,6 @@ else
     echo "umask is:"
     umask
     #chmod g-s "${CONFLUENCE_HOME}" -> chmod: operation not permitted
-    exec "umask 0000 && $CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
+    exec "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
 fi
 
