@@ -29,16 +29,16 @@ if ! whoami &> /dev/null; then
   > /etc/group
   cat /tmp/group >> /etc/group
   
-  cp /etc/profile /tmp/profile
-  sed -i 's/umask 022/umask 002/' /tmp/profile
-  > /etc/profile
-  cat /tmp/profile >> /etc/profile
+  #cp /etc/profile /tmp/profile
+  #sed -i 's/umask 022/umask 002/' /tmp/profile
+  #> /etc/profile
+  #cat /tmp/profile >> /etc/profile
 fi
 # End of Support Arbitrary User IDs
 
 # umask:
-umask 002
-/bin/bash -l
+#umask 002
+#/bin/bash -l
 
 # Start Confluence as the correct user
 if [ "${UID}" -eq 0 ]; then
@@ -52,7 +52,7 @@ if [ "${UID}" -eq 0 ]; then
     # Now drop privileges
     exec su -s /bin/bash "${RUN_USER}" -c "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh $@"
 else
-    echo "User is not root, changing permissions just in case"
+    echo "User is not root"
     #chmod g-s "${CONFLUENCE_HOME}" -> chmod: operation not permitted
     exec "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
 fi
