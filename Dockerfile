@@ -14,7 +14,7 @@ ENV UID ${RUN_USER}
 ENV CONFLUENCE_HOME          /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence
 
-VOLUME ["${CONFLUENCE_HOME}"]
+#VOLUME ["${CONFLUENCE_HOME}"]
 
 # Expose HTTP and Synchrony ports
 EXPOSE 8090
