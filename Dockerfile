@@ -22,17 +22,17 @@ EXPOSE 8091
 
 WORKDIR $CONFLUENCE_HOME
 
+ENTRYPOINT ["/sbin/tini", "--","/entrypoint.sh"]
 #CMD ["sh", "/entrypoint.sh", "-fg"]
-CMD ["/entrypoint.sh", "-fg"]
-ENTRYPOINT ["/sbin/tini", "--"]
+#CMD ["/entrypoint.sh", "-fg"]
 
 RUN apk update -qq \
     && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini \
     && update-ca-certificates \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod 777 /entrypoint.sh
+#COPY entrypoint.sh /entrypoint.sh
+#RUN chmod 777 /entrypoint.sh
 
 ARG CONFLUENCE_VERSION=6.10.1
 ARG DOWNLOAD_URL=http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
