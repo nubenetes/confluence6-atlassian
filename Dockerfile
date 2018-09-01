@@ -56,8 +56,8 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
 RUN chgrp -R 0 ${CONFLUENCE_INSTALL_DIR} && \
     chmod -R g=u ${CONFLUENCE_INSTALL_DIR}
 RUN chgrp -R 0 ${CONFLUENCE_HOME} && \
-    chmod -R g=u ${CONFLUENCE_HOME} && \
-    chmod -R g+rwX ${CONFLUENCE_HOME}
+    chmod -R g=u ${CONFLUENCE_HOME}
+    #chmod -R g+rwX ${CONFLUENCE_HOME}
 #RUN chmod -R 775 ${CONFLUENCE_INSTALL_DIR} 
 #RUN chmod -R 775 ${CONFLUENCE_HOME}
 #RUN chmod g-s ${CONFLUENCE_HOME}
