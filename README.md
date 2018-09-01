@@ -218,3 +218,4 @@ Error from server (BadRequest): container "confluence6-atlassian" in pod "conflu
 * [**Connecting docker containers**](https://blog.csainty.com/2016/07/connecting-docker-containers.html)
 * [**confluence.atlassian.com: Confluence does not start due to Spring Application context has not been set**](https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html)
 * [**stackoverflow.com: Deploying Confluence onto Openshift**](https://stackoverflow.com/questions/14189689/deploying-atlassians-confluence-onto-openshift)
+* [quora.com: umask and default file permissions](https://www.quora.com/Can-we-set-file-permissions-to-775-by-using-umask-in-Linux-If-yes-what-would-the-umask-be-and-how-will-it-be-calculated)
