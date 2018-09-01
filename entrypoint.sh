@@ -25,7 +25,9 @@ if ! whoami &> /dev/null; then
   #    sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /etc/group
   #fi
 fi
-sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /etc/group
+cp /etc/group /tmp/group
+sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /tmp/group
+cp /tmp/group /etc/group
 # End of Support Arbitrary User IDs
 
 # Start Confluence as the correct user
