@@ -22,9 +22,9 @@ EXPOSE 8091
 
 WORKDIR $CONFLUENCE_HOME
 
-ENTRYPOINT ["/sbin/tini", "--","/entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "--"]
 #CMD ["sh", "/entrypoint.sh", "-fg"]
-#CMD ["/entrypoint.sh", "-fg"]
+CMD ["/entrypoint.sh", "-fg"]
 
 RUN apk update -qq \
     && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini \
