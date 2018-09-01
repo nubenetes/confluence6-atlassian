@@ -63,5 +63,6 @@ RUN chgrp -R 0 ${CONFLUENCE_HOME} && \
 #RUN chmod g-s ${CONFLUENCE_HOME}
 RUN chmod g=u /etc/passwd
 RUN chmod g=u /etc/group
+RUN chmod g=u /etc/profile
 USER 1001  
 # End of Support Arbitrary User IDs
