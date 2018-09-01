@@ -35,7 +35,7 @@ if ! whoami &> /dev/null; then
   cat /tmp/profile >> /etc/profile
 fi
 # End of Support Arbitrary User IDs
-
+umask 002
 # Start Confluence as the correct user
 if [ "${UID}" -eq 0 ]; then
     echo "User is currently root. Will change directory ownership to ${RUN_USER}:${RUN_GROUP}, then downgrade permission to ${RUN_USER}"
