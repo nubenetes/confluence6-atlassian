@@ -54,6 +54,6 @@ if [ "${UID}" -eq 0 ]; then
 else
     echo "User is not root"
     #chmod g-s "${CONFLUENCE_HOME}" -> chmod: operation not permitted
-    umask 0002 && exec "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
+    exec "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
 fi
 
