@@ -29,7 +29,10 @@ if ! whoami &> /dev/null; then
   > /etc/group
   cat /tmp/group >> /etc/group
   
-  sed -i 's/umask 022/umask 002/' /etc/profile
+  cp /etc/profile /tmp/profile
+  sed -i 's/umask 022/umask 002/' /tmp/profile
+  > /etc/profile
+  cat /tmp/profile >> /etc/profile
 fi
 # End of Support Arbitrary User IDs
 
