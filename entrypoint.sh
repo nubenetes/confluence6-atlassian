@@ -28,6 +28,8 @@ if ! whoami &> /dev/null; then
   sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /tmp/group
   > /etc/group
   cat /tmp/group >> /etc/group
+  
+  sed -i 's/umask 022/umask 002/' /tmp/profile
 fi
 # End of Support Arbitrary User IDs
 
