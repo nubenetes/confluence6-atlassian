@@ -38,7 +38,7 @@ fi
 
 # umask:
 umask 002
-/bin/bash
+/bin/bash -l
 
 # Start Confluence as the correct user
 if [ "${UID}" -eq 0 ]; then
