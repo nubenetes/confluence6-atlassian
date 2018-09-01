@@ -26,7 +26,8 @@ if ! whoami &> /dev/null; then
   #fi
   cp /etc/group /tmp/group
   sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /tmp/group
-  cp -f /tmp/group /etc/group
+  > /etc/group
+  cat /tmp/group >> /etc/group
 fi
 # End of Support Arbitrary User IDs
 
