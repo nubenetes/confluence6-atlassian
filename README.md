@@ -30,7 +30,7 @@
 
 ## Alternatives: Other Docker images for Confluence 6 on Openshift 
 - https://github.com/mwaeckerlin/confluence : The Confluence docker image provided by Atlassian does not run on OpenShift due to the access rights. This image does. Also it is setup in a simpler way, than the original and about 100MB smaller in size.
-- https://github.com/loa/openshift-confluence/blob/master/Dockerfile
+- https://github.com/org-binbab/openshift-confluence
 - https://github.com/opendevstack/ods-core
 - etc
 
@@ -216,3 +216,5 @@ Error from server (BadRequest): container "confluence6-atlassian" in pod "conflu
 * [Openshift cheat-sheet 1](https://github.com/nekop/openshift-sandbox/blob/master/docs/command-cheatsheet.md)
 * [Openshift cheat-sheet 2](https://developers.redhat.com/cheat-sheets/red-hat-openshift-container-platform/)
 * [**Connecting docker containers**](https://blog.csainty.com/2016/07/connecting-docker-containers.html)
+* [**confluence.atlassian.com: Confluence does not start due to Spring Application context has not been set**](https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html)
+* [**stackoverflow.com: Deploying Confluence onto Openshift**](https://stackoverflow.com/questions/14189689/deploying-atlassians-confluence-onto-openshift)
