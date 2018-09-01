@@ -22,7 +22,8 @@ EXPOSE 8091
 
 WORKDIR $CONFLUENCE_HOME
 
-CMD ["sh", "/entrypoint.sh", "-fg"]
+#CMD ["sh", "/entrypoint.sh", "-fg"]
+CMD ["/entrypoint.sh", "-fg"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
 RUN apk update -qq \
