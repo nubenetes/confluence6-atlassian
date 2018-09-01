@@ -19,13 +19,14 @@ export CATALINA_OPTS
 # Support Arbitrary User IDs (Reference: OpenShift Container Platform 3.9 Image Creation Guide):
 if ! whoami &> /dev/null; then
   if [ -w /etc/passwd ]; then
-    echo "${RUN_USER:-default}:x:$(id -u):0:${RUN_USER:-default} user:${CONFLUENCE_HOME}:/sbin/nologin" >> /etc/passwd
+    #echo "${RUN_USER:-default}:x:$(id -u):0:${RUN_USER:-default} user:${CONFLUENCE_HOME}:/sbin/nologin" >> /etc/passwd
+    echo "${RUN_USER:-default}:x:$(id -u):$(id -u):${RUN_USER:-default} user:${CONFLUENCE_HOME}:/sbin/nologin" >> /etc/passwd
   fi
   #if [ -w /etc/group ]; then
   #    sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /etc/group
   #fi
   cp /etc/group /tmp/group
-  sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /tmp/group
+  sed -i "1s/.*/root:x:0:root,$(id -u),${RUN_USER:-default}/" /tmp/group
   > /etc/group
   cat /tmp/group >> /etc/group
   
