@@ -31,7 +31,7 @@ RUN apk update -qq \
     && update-ca-certificates \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
-#COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 #RUN chmod 777 /entrypoint.sh
 
 ARG CONFLUENCE_VERSION=6.10.1
