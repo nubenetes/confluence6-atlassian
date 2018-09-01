@@ -24,10 +24,10 @@ if ! whoami &> /dev/null; then
   #if [ -w /etc/group ]; then
   #    sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /etc/group
   #fi
-  #cp /etc/group /tmp/group
-  sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /etc/group
-  #> /etc/group
-  #cat /tmp/group >> /etc/group
+  cp /etc/group /tmp/group
+  sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /tmp/group
+  > /etc/group
+  cat /tmp/group >> /etc/group
   
   sed -i 's/umask 022/umask 002/' /etc/profile
 fi
