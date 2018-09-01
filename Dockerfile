@@ -32,7 +32,7 @@ RUN apk update -qq \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
 COPY entrypoint.sh /entrypoint.sh
-#RUN chmod 777 /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
 
 ARG CONFLUENCE_VERSION=6.10.1
 ARG DOWNLOAD_URL=http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
