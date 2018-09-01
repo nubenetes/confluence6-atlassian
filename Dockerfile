@@ -70,5 +70,5 @@ RUN umask 0002 \
 #RUN chmod g=u /etc/passwd
 #RUN chmod g=u /etc/group
 #RUN chmod g=u /etc/profile
-USER 1001  
+#USER 1001  
 # End of Support Arbitrary User IDs
