@@ -53,7 +53,10 @@ if [ "${UID}" -eq 0 ]; then
     exec su -s /bin/bash "${RUN_USER}" -c "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh $@"
 else
     echo "User is not root"
+    echo "User is ${RUN_USER}"
+    echo "umask is:"
+    umask
     #chmod g-s "${CONFLUENCE_HOME}" -> chmod: operation not permitted
-    exec "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
+    exec "umask 0000 && $CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
 fi
 
