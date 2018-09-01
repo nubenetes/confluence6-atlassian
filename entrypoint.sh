@@ -21,6 +21,9 @@ if ! whoami &> /dev/null; then
   if [ -w /etc/passwd ]; then
     echo "${RUN_USER:-default}:x:$(id -u):0:${RUN_USER:-default} user:${CONFLUENCE_HOME}:/sbin/nologin" >> /etc/passwd
   fi
+  if [ -w /etc/group ]; then
+      sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /etc/group
+  fi
 fi
 # End of Support Arbitrary User IDs
 
