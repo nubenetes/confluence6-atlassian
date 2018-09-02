@@ -47,7 +47,14 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && sed -i -e 's/UMASK="0027"/UMASK="0002"/' ${CONFLUENCE_INSTALL_DIR}/bin/catalina.sh \
     && dos2unix ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties \
     && echo -e "\n" >> ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties \
-    && echo "confluence.home=${CONFLUENCE_HOME}/" >> ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties
+    && echo "confluence.home=${CONFLUENCE_HOME}/" >> ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties 
+    
+# Disable JMX: 
+# HTTP Status 500 – Internal Server Error
+# Unable to register MBean [com.atlassian.confluence.jmx.TaskQueueWrapper@6e7deffb] with key 'Confluence:name=MailTaskQueue'; nested exception is javax.management.InstanceAlreadyExistsException: Confluence:name=MailTaskQueue
+# https://confluence.atlassian.com/confkb/unable-to-start-confluence-due-to-jmx-182158269.html
+# https://community.atlassian.com/t5/Confluence-questions/Confluence-Server-install-in-Docker-falure/qaq-p/458625
+COPY jmxContext.xml ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/jmxContext.xml     
     
 # Updating postgres drivers:
 #ADD https://jdbc.postgresql.org/download/postgresql-42.2.4.jar /opt/atlassian/confluence/confluence/WEB-INF/lib
