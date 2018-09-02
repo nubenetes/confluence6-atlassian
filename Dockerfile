@@ -46,6 +46,7 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && sed -i -e 's/port="8090"/port="8090" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' ${CONFLUENCE_INSTALL_DIR}/conf/server.xml \
     && sed -i -e 's/UMASK="0027"/UMASK="0002"/' ${CONFLUENCE_INSTALL_DIR}/bin/catalina.sh \
     && dos2unix ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties \
+    && echo -e "\n" >> ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties \
     && echo "confluence.home=${CONFLUENCE_HOME}" >> ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties
     
 # Updating postgres drivers:
