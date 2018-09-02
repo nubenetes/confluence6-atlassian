@@ -34,7 +34,7 @@ RUN apk update -qq \
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 777 /entrypoint.sh
 
-ARG CONFLUENCE_VERSION=5.8.14
+ARG CONFLUENCE_VERSION=5.9.14
 ARG DOWNLOAD_URL=http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
 
 COPY . /tmp
@@ -47,8 +47,8 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
     && sed -i -e 's/UMASK="0027"/UMASK="0002"/' ${CONFLUENCE_INSTALL_DIR}/bin/catalina.sh
     
 # Updating postgres drivers:
-ADD https://jdbc.postgresql.org/download/postgresql-42.2.4.jar /opt/atlassian/confluence/confluence/WEB-INF/lib
-RUN chmod +x /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.2.4.jar
+#ADD https://jdbc.postgresql.org/download/postgresql-42.2.4.jar /opt/atlassian/confluence/confluence/WEB-INF/lib
+#RUN chmod +x /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.2.4.jar
 #RUN rm /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.1.1.jar
 
 # Support Arbitrary User IDs (Reference: OpenShift Container Platform 3.9 Image Creation Guide):
