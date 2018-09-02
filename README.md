@@ -89,7 +89,7 @@ https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-
     Endpoints:      10.128.3.40:8090, 10.128.3.40:8091
 ```
 ```
-    oc get all | grep router
+    oc get all | grep routes
 ```
 ``` 
     oc annotate route confluence6-atlassian --overwrite haproxy.router.openshift.io/timeout=300s
