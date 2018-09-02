@@ -39,13 +39,13 @@ fi
 
 
 # https://confluence.atlassian.com/confkb/confluence-generates-confluence-is-vacant-error-on-install-779164449.html 
-if [ -w /etc/hosts ]; then
-  cp /etc/hosts /tmp/hosts
-  HOSTNAME=$(hostname)
-  sed -i '2s/.*/127.0.0.1 localhost ${HOSTNAME}/' /tmp/hosts
-  > /etc/hosts
-  cat /tmp/hosts >> /etc/hosts
-fi 
+#if [ -w /etc/hosts ]; then
+#  cp /etc/hosts /tmp/hosts
+#  HOSTNAME=$(hostname)
+#  sed -i '2s/.*/127.0.0.1 localhost ${HOSTNAME}/' /tmp/hosts
+#  > /etc/hosts
+#  cat /tmp/hosts >> /etc/hosts
+#fi 
 
 # Purge of concfluence home:
 # https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-there-may-be-a-configuration-problem-in-your-confluence-cfg-xml-file-241568568.html
