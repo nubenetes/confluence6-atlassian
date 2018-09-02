@@ -253,3 +253,4 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [**confluence.atlassian.com: Confluence does not start due to Spring Application context has not been set**](https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html)
 * [**stackoverflow.com: Deploying Confluence onto Openshift**](https://stackoverflow.com/questions/14189689/deploying-atlassians-confluence-onto-openshift)
 * [confluence.atlassian.com: **Atlassian Supported Platforms**](https://confluence.atlassian.com/doc/supported-platforms-207488198.html)
+* [community.atlassian.com: **Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database**](https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543)
