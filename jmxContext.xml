@@ -31,4 +31,4 @@
           <property name="exposeManagedResourceClassLoader" value="true"/>
           <property name="enabled" value="false"/>
       </bean>
- </beans>
+</beans>
