@@ -256,3 +256,4 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [community.atlassian.com: **Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database**](https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543)
 * [stackoverflow.com: **OpenShift Service Proxy timeout**](https://stackoverflow.com/questions/47812807/openshift-service-proxy-timeout)
 * [docs.openshift.com: **Configuring Route Timeouts**](https://docs.openshift.com/container-platform/3.10/install_config/configuring_routing.html)
+* [docs.openshift.com: The HAProxy Template Router](https://docs.openshift.com/container-platform/3.10/architecture/networking/assembly_available_router_plugins.html#architecture-haproxy-router)
