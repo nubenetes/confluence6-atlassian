@@ -6,6 +6,7 @@
     - [Files in this repo](#files-in-this-repo)
     - [Configuration](#configuration)
         - [Jenkins Slave Requirements](#jenkins-slave-requirements)
+        - [Container Requirements](#container-requirements)
         - [Openshift Requirements](#openshift-requirements)
         - [Docker Engine running in your development environment](#docker-engine-running-in-your-development-environment)
     - [Pulling and running the container](#pulling-and-running-the-container)
@@ -16,6 +17,8 @@
         - [Testing connectivity from Confluence6 container towards PostgresSQL container](#testing-connectivity-from-confluence6-container-towards-postgressql-container)
     - [How to Debug in Openshift when a deployment fails](#how-to-debug-in-openshift-when-a-deployment-fails)
         - [Examples:](#examples)
+- [Known Errors](#known-errors)
+    - [Spring Application context has not been set](#spring-application-context-has-not-been-set)
 - [External References](#external-references)
 
 <!-- /TOC -->
@@ -30,8 +33,8 @@
 
 ## Alternatives: Other Docker images for Confluence 6 on Openshift 
 - https://github.com/mwaeckerlin/confluence : The Confluence docker image provided by Atlassian does not run on OpenShift due to the access rights. This image does. Also it is setup in a simpler way, than the original and about 100MB smaller in size.
-- https://github.com/org-binbab/openshift-confluence
-- https://github.com/opendevstack/ods-core
+- https://github.com/org-binbab/openshift-confluence (Confluence 5 + MySQL)
+- https://github.com/opendevstack/ods-core : contains the core of open dev stack - infrastructure setup based on atlassian tooling, jenkins, nexus, sonarqube and shared images.
 - etc
 
 ## Files in this repo
@@ -41,19 +44,17 @@
 ### Jenkins Slave Requirements
 - OC tools + docker installed
 
+### Container Requirements
+- Make sure the container also has enough memory to run. Atlassian recommend 2GiB of memory allocated to accommodate the application server.
+
 ### Openshift Requirements
-- Run confluence with arbitrary ID (see "Support Arbitrary User IDs" reference)
-    - Arbitrary User IDs: For an image to support running as an arbitrary user, directories and files that may be written to by processes in the image should be owned by the root group and be read/writable by that group. Files to be executed should also have group execute permissions.
+- Run confluence with arbitrary ID (see **Support Arbitrary User IDs** reference):
+    - When a container is run with an external volume on Openshift, the application process doesn't run as root
+user (it is different with docker) which cause the problem: application process has no permission to create file in the volumeMounts.
+    - Solution for Openshift's **Arbitrary User IDs**: For an image to support running as an arbitrary user, directories and files that may be written to by processes in the image should be owned by the root group and be read/writable by that group. Files to be executed should also have group execute permissions.
+    - Confluence process needs to be run within the container with a non-root User ID that belongs to a root group (required to have write access to Confluence Home).
+    - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
     - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image.
-    - **S2I (not used here in this Confluence6 Dockerfile)**: If your S2I image does not include a USER declaration with a numeric user, your builds will fail by default. In order to allow images that use either named users or the root (0) user to build in OpenShift Container Platform, you can add the project’s builder service account (system:serviceaccount:your-project:builder) to the privileged security context constraint (SCC). Alternatively, you can allow all images to run as any user. https://docs.openshift.com/container-platform/3.6/creating_images/guidelines.html 
-    - Example of One-click jenkins Dockerfile:
-    ```
-        USER 1001
-        ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-        CMD ["/usr/libexec/s2i/run"]
-    ```
-- Confluence process needs to be run within the container with a non-root User ID that belongs to a root/adm group (required to have write access to Confluence Home)
-- $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process)
 
 ### Docker Engine running in your development environment
 - Requirement: $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions. 
@@ -162,6 +163,11 @@ use@host:~> oc logs pod/confluence6-atlassian-40-tj03j -n <openshift-namespace>
 Error from server (BadRequest): container "confluence6-atlassian" in pod "confluence6-atlassian-40-tj03j" is waiting to start: image can't be pulled
 ```
 
+# Known Errors
+## Spring Application context has not been set
+This error is commonly seen when the user running Confluence is lacking permissions in the <confluence_home> directory or during a restart of a previous failed installation. The following link goes through all of those possibilities and provides resolution steps for for each of them: https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html
+
+
 # External References
 * [Docker Pipeline Plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Pipeline+Plugin): Allows to build and use Docker containers from pipelines.
     * [plugins.jenkins.io: Docker Pipeline plugin](https://plugins.jenkins.io/docker-workflow)
@@ -216,6 +222,9 @@ Error from server (BadRequest): container "confluence6-atlassian" in pod "conflu
 * [Openshift cheat-sheet 1](https://github.com/nekop/openshift-sandbox/blob/master/docs/command-cheatsheet.md)
 * [Openshift cheat-sheet 2](https://developers.redhat.com/cheat-sheets/red-hat-openshift-container-platform/)
 * [**Connecting docker containers**](https://blog.csainty.com/2016/07/connecting-docker-containers.html)
+* [quora.com: umask and default file permissions](https://www.quora.com/Can-we-set-file-permissions-to-775-by-using-umask-in-Linux-If-yes-what-would-the-umask-be-and-how-will-it-be-calculated)
+* [confluence.atlassian.com: **Update the Confluence Docker image to use Oracle JDK**](https://confluence.atlassian.com/confkb/update-the-confluence-docker-image-to-use-oracle-jdk-829062521.html)
+* [confluence.atlassian.com: **Atlassian Support Offerings**](https://confluence.atlassian.com/support/atlassian-support-offerings-193299636.html)
 * [**confluence.atlassian.com: Confluence does not start due to Spring Application context has not been set**](https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html)
 * [**stackoverflow.com: Deploying Confluence onto Openshift**](https://stackoverflow.com/questions/14189689/deploying-atlassians-confluence-onto-openshift)
-* [quora.com: umask and default file permissions](https://www.quora.com/Can-we-set-file-permissions-to-775-by-using-umask-in-Linux-If-yes-what-would-the-umask-be-and-how-will-it-be-calculated)
+* [confluence.atlassian.com: **Atlassian Supported Platforms**](https://confluence.atlassian.com/doc/supported-platforms-207488198.html)
