@@ -8,6 +8,8 @@
         - [Jenkins Slave Requirements](#jenkins-slave-requirements)
         - [Container Requirements](#container-requirements)
         - [Openshift Requirements](#openshift-requirements)
+            - [Support Arbitrary User IDs](#support-arbitrary-user-ids)
+            - [Configuring Route Timeouts](#configuring-route-timeouts)
         - [Database drivers requirements](#database-drivers-requirements)
             - [PostgreSQL driver](#postgresql-driver)
             - [Microsoft SQL Server driver](#microsoft-sql-server-driver)
@@ -53,6 +55,7 @@
 - Make sure the container also has enough memory to run. Atlassian recommend 2GiB of memory allocated to accommodate the application server.
 
 ### Openshift Requirements
+#### Support Arbitrary User IDs
 - Run confluence with arbitrary ID (see **Support Arbitrary User IDs** reference):
     - When a container is run with an external volume on Openshift, the application process doesn't run as root
 user (it is different with docker) which cause the problem: application process has no permission to create file in the volumeMounts.
@@ -60,6 +63,39 @@ user (it is different with docker) which cause the problem: application process 
     - Confluence process needs to be run within the container with a non-root User ID that belongs to a root group (required to have write access to Confluence Home).
     - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
     - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image.
+
+#### Configuring Route Timeouts
+- Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database:
+https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
+    - 2The important point is to wait for another approx. 5 minutes before you reload or try to access the base url. If you reload or access the base url before, confluence would break down with the mentioned errors (Java Beans). But if you wait 5 minutes and reload after that you can proceed with the configuration. The problem seems to be that the configuration of the database continues in the background on the container, but is interrupted if confluence receives another http request."
+    - "The solution proposed above was only a shortterm fix. A proper solution consists in changing the configuration of the reverse proxy. You have to increase the time limit the reverse proxy uses before it terminates an open session to something like 5 minutes instead of one minute."
+```
+    oc describe route confluence6-atlassian
+    Name:                   confluence6-atlassian
+    Namespace:              confluence
+    Created:                12 minutes ago
+    Labels:                 app=confluence6-atlassian
+    Annotations:            openshift.io/host.generated=true
+    Requested Host:         confluence6-atlassian-confluence.e4ff.pro-eu-west-1.openshiftapps.com
+                              exposed on router router (host elb.e4ff.pro-eu-west-1.openshiftapps.com) 12 minutes ago
+    Path:                   <none>
+    TLS Termination:        <none>
+    Insecure Policy:        <none>
+    Endpoint Port:          8090-tcp
+
+    Service:        confluence6-atlassian
+    Weight:         100 (100%)
+    Endpoints:      10.128.3.40:8090, 10.128.3.40:8091
+```
+```
+    oc get all | grep router
+```
+``` 
+    oc annotate route confluence6-atlassian --overwrite haproxy.router.openshift.io/timeout=300s
+```
+```
+    oc annotate route confluence6-atlassian --overwrite confluence6-atlassian-confluence.e4ff.pro-eu-west-1.openshiftapps.com/timeout=300s
+```
 
 ### Database drivers requirements
 #### PostgreSQL driver
@@ -256,4 +292,4 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [community.atlassian.com: **Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database**](https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543)
 * [stackoverflow.com: **OpenShift Service Proxy timeout**](https://stackoverflow.com/questions/47812807/openshift-service-proxy-timeout)
 * [docs.openshift.com: **Configuring Route Timeouts**](https://docs.openshift.com/container-platform/3.10/install_config/configuring_routing.html)
-* [docs.openshift.com: The HAProxy Template Router](https://docs.openshift.com/container-platform/3.10/architecture/networking/assembly_available_router_plugins.html#architecture-haproxy-router)
+* [docs.openshift.com: **The HAProxy Template Router**](https://docs.openshift.com/container-platform/3.10/architecture/networking/assembly_available_router_plugins.html#architecture-haproxy-router)
