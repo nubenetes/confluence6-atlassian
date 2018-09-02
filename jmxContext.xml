@@ -1,30 +1,34 @@
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.atlassian.com/schema/atlassian-spring" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.atlassian.com/schema/atlassian-spring http://www.atlassian.com/schema/atlassian-spring/atlassian.xsd">
-<bean id="exporter" class="com.atlassian.confluence.jmx.MBeanExporterWithUnregisterImpl">
-<property name="beans">
-<map>
-<entry key="Confluence:name=MailTaskQueue">
-<bean class="com.atlassian.confluence.jmx.TaskQueueWrapper">
-<constructor-arg ref="mailTaskQueue"/>
-</bean>
-</entry>
-<entry key="Confluence:name=IndexingStatistics">
-<bean class="com.atlassian.confluence.jmx.JmxIndexManagerWrapper">
-<constructor-arg ref="indexManager"/>
-</bean>
-</entry>
-<entry key="Confluence:name=SchedulingStatistics">
-<bean class="com.atlassian.confluence.jmx.JmxScheduledTaskWrapper">
-<constructor-arg ref="scheduler"/>
-</bean>
-</entry>
-<entry key="Confluence:name=SystemInformation">
-<bean class="com.atlassian.confluence.jmx.JmxSystemInfoWrapper">
-<constructor-arg ref="systemInformationService"/>
-</bean>
-</entry>
-</map>
-</property>
-<property name="exposeManagedResourceClassLoader" value="true"/>
-<property name="enabled" value="false"/>
-</bean>
-</beans>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:atl="http://www.atlassian.com/schema/atlassian-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.atlassian.com/schema/atlassian-spring http://www.atlassian.com/schema/atlassian-spring/atlassian.xsd">
+
+      <bean id="exporter" class="com.atlassian.confluence.jmx.MBeanExporterWithUnregisterImpl">
+          <property name="beans">
+              <map>
+                    <entry key="Confluence:name=MailTaskQueue">
+                        <bean class="com.atlassian.confluence.jmx.TaskQueueWrapper"><constructor-arg
+                                ref="mailTaskQueue"/></bean>
+                    </entry>
+                  <entry key="Confluence:name=IndexingStatistics">
+                        <bean class="com.atlassian.confluence.jmx.JmxIndexManagerWrapper"><constructor-arg
+                                ref="indexManager"/></bean>
+                    </entry>
+                  <entry key="Confluence:name=SchedulingStatistics">
+                        <bean class="com.atlassian.confluence.jmx.JmxScheduledTaskWrapper"><constructor-arg
+                                ref="scheduler"/></bean>
+                    </entry>
+                  <entry key="Confluence:name=SystemInformation">
+                        <bean class="com.atlassian.confluence.jmx.JmxSystemInfoWrapper"><constructor-arg
+                                ref="systemInformationService"/></bean>
+                    </entry>
+              </map>
+          </property>
+          <property name="exposeManagedResourceClassLoader" value="true"/>
+          <property name="enabled" value="false"/>
+      </bean>
+ </beans>
