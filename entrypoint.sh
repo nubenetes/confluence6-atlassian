@@ -22,24 +22,20 @@ if ! whoami &> /dev/null; then
     #echo "${RUN_USER:-default}:x:$(id -u):0:${RUN_USER:-default} user:${CONFLUENCE_HOME}:/sbin/nologin" >> /etc/passwd
     echo "${RUN_USER:-default}:x:$(id -u):$(id -u):${RUN_USER:-default} user:${CONFLUENCE_HOME}:/sbin/nologin" >> /etc/passwd
   fi
-  #if [ -w /etc/group ]; then
-  #    sed -i "1s/.*/root:x:0:root,${RUN_USER:-default},$(id -u)/" /etc/group
-  #fi
-  cp /etc/group /tmp/group
-  sed -i "1s/.*/root:x:0:root,$(id -u),${RUN_USER:-default}/" /tmp/group
-  > /etc/group
-  cat /tmp/group >> /etc/group
-  
-  #cp /etc/profile /tmp/profile
-  #sed -i 's/umask 022/umask 002/' /tmp/profile
-  #> /etc/profile
-  #cat /tmp/profile >> /etc/profile
+  if [ -w /etc/group ]; then
+    cp /etc/group /tmp/group
+    sed -i "1s/.*/root:x:0:root,$(id -u),${RUN_USER:-default}/" /tmp/group
+    > /etc/group
+    cat /tmp/group >> /etc/group
+  fi
+  if [ -w /etc/profile ]; then
+    cp /etc/profile /tmp/profile
+    sed -i 's/umask 022/umask 002/' /tmp/profile
+    > /etc/profile
+    cat /tmp/profile >> /etc/profile
+  fi 
 fi
 # End of Support Arbitrary User IDs
-
-# umask:
-#umask 002
-#/bin/bash -l
 
 # Start Confluence as the correct user
 if [ "${UID}" -eq 0 ]; then
@@ -55,9 +51,7 @@ if [ "${UID}" -eq 0 ]; then
 else
     echo "User is not root"
     echo "User is ${RUN_USER}"
-    echo "umask is:"
-    umask
-    #chmod g-s "${CONFLUENCE_HOME}" -> chmod: operation not permitted
+    echo "umask is: "$(umask)
     exec "$CONFLUENCE_INSTALL_DIR/bin/start-confluence.sh" "$@"
 fi
 
