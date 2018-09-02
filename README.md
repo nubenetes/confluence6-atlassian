@@ -1,3 +1,4 @@
+# Confluence 6 docker image for Openshift
 # Table of Contents
 <!-- TOC -->
 - [Table of Contents](#table-of-contents)
@@ -67,7 +68,7 @@ user (it is different with docker) which cause the problem: application process 
 #### Configuring Route Timeouts
 - Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database:
 https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
-    - 2The important point is to wait for another approx. 5 minutes before you reload or try to access the base url. If you reload or access the base url before, confluence would break down with the mentioned errors (Java Beans). But if you wait 5 minutes and reload after that you can proceed with the configuration. The problem seems to be that the configuration of the database continues in the background on the container, but is interrupted if confluence receives another http request."
+    - "The important point is to wait for another approx. 5 minutes before you reload or try to access the base url. If you reload or access the base url before, confluence would break down with the mentioned errors (Java Beans). But if you wait 5 minutes and reload after that you can proceed with the configuration. The problem seems to be that the configuration of the database continues in the background on the container, but is interrupted if confluence receives another http request."
     - "The solution proposed above was only a shortterm fix. A proper solution consists in changing the configuration of the reverse proxy. You have to increase the time limit the reverse proxy uses before it terminates an open session to something like 5 minutes instead of one minute."
 ```
     oc describe route confluence6-atlassian
