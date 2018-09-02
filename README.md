@@ -8,6 +8,7 @@
         - [Jenkins Slave Requirements](#jenkins-slave-requirements)
         - [Container Requirements](#container-requirements)
         - [Openshift Requirements](#openshift-requirements)
+        - [Database drivers requirements](#database-drivers-requirements)
         - [Docker Engine running in your development environment](#docker-engine-running-in-your-development-environment)
     - [Pulling and running the container](#pulling-and-running-the-container)
     - [Running and connecting Frontend container and Backend container](#running-and-connecting-frontend-container-and-backend-container)
@@ -55,6 +56,26 @@ user (it is different with docker) which cause the problem: application process 
     - Confluence process needs to be run within the container with a non-root User ID that belongs to a root group (required to have write access to Confluence Home).
     - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
     - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image.
+
+### Database drivers requirements
+#### PostgreSQL driver
+- Already included in Confluence.
+#### Microsoft SQL Server driver
+- Already included in Confluence.
+- https://developers.redhat.com/blog/2018/01/25/microsoft-sql-server-pod-openshift/
+- https://hub.docker.com/r/microsoft/mssql-server-linux/
+
+#### MySQL driver
+Confluence needs a driver to connect to MySQL. You'll need to:
+- Download the MySQL driver
+- Drop the .jar file in /opt/atlassian/confluence/confluence/WEB-INF/lib
+- Restart Confluence and continue the setup process.
+
+#### Oracle driver
+Confluence needs a driver to connect to Oracle. You'll need to:
+- Download the Oracle driver
+- Drop the .jar file in /opt/atlassian/confluence/confluence/WEB-INF/lib
+- Restart Confluence and continue the setup process.
 
 ### Docker Engine running in your development environment
 - Requirement: $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions. 
