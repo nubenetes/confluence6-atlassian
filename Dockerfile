@@ -49,7 +49,7 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
 # Updating postgres drivers:
 ADD https://jdbc.postgresql.org/download/postgresql-42.2.4.jar /opt/atlassian/confluence/confluence/WEB-INF/lib
 RUN chmod +x /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.2.4.jar
-RUN rm /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.1.1.jar
+#RUN rm /opt/atlassian/confluence/confluence/WEB-INF/lib/postgresql-42.1.1.jar
 
 # Support Arbitrary User IDs (Reference: OpenShift Container Platform 3.9 Image Creation Guide):
 RUN chgrp -R 0 ${CONFLUENCE_INSTALL_DIR} ${CONFLUENCE_HOME} \
