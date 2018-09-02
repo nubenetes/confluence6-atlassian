@@ -37,9 +37,9 @@ if ! whoami &> /dev/null; then
 fi
 # End of Support Arbitrary User IDs
 
-# resetting confluence.cfg.xml 
+# Purge of concfluence home:
 # https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-there-may-be-a-configuration-problem-in-your-confluence-cfg-xml-file-241568568.html
-> ${CONFLUENCE_HOME}/confluence.cfg.xml
+rm -rf ${CONFLUENCE_HOME}/*
 
 # Start Confluence as the correct user
 if [ "${UID}" -eq 0 ]; then
