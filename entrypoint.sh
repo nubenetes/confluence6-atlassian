@@ -28,12 +28,12 @@ if ! whoami &> /dev/null; then
     > /etc/group
     cat /tmp/group >> /etc/group
   fi
-  if [ -w /etc/profile ]; then
-    cp /etc/profile /tmp/profile
-    sed -i 's/umask 022/umask 002/' /tmp/profile
-    > /etc/profile
-    cat /tmp/profile >> /etc/profile
-  fi 
+  #if [ -w /etc/profile ]; then
+  #  cp /etc/profile /tmp/profile
+  #  sed -i 's/umask 022/umask 002/' /tmp/profile
+  #  > /etc/profile
+  #  cat /tmp/profile >> /etc/profile
+  #fi 
 fi
 # End of Support Arbitrary User IDs
 
