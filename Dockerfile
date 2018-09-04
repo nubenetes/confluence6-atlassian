@@ -64,6 +64,6 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
 # Support Arbitrary User IDs (Reference: OpenShift Container Platform 3.9 Image Creation Guide):
 RUN chgrp -R 0 ${CONFLUENCE_INSTALL_DIR}/ ${CONFLUENCE_HOME}/ \
     && chmod -R g=u ${CONFLUENCE_INSTALL_DIR}/ ${CONFLUENCE_HOME}/ \
-    && chmod g=u /etc/passwd /etc/group /etc/profile 
+    && chmod g=u /etc/passwd /etc/group 
 #USER 1001  
 # End of Support Arbitrary User IDs
