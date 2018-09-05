@@ -30,7 +30,7 @@
 - [External References](#external-references)
 
 <!-- /TOC -->
-# HowTo Build a custom Confluence 6 docker image with a public dockerhub image as a base
+# HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Java Oracle
 * Origin Dockerfile based on the following dockerhub repo: https://hub.docker.com/r/atlassian/confluence-server/
 * This image has been developed and tested in the following environment:
     * **Openshift.com account** with 6GiB of RAM + 4GiB of persistent storage + 2Gib of Terminating Memory. 
@@ -67,7 +67,7 @@ user (it is different with docker) which cause the problem: application process 
     - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
     - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image.
 
-#### Configuring Route Timeouts
+#### Configuring Route Timeouts. Route Annotations
 - Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database:
 https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
     - "The important point is to wait for another approx. 5 minutes before you reload or try to access the base url. If you reload or access the base url before, confluence would break down with the mentioned errors (Java Beans). But if you wait 5 minutes and reload after that you can proceed with the configuration. The problem seems to be that the configuration of the database continues in the background on the container, but is interrupted if confluence receives another http request."
@@ -95,9 +95,6 @@ https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-
 ```
 ``` 
     oc annotate route confluence6-atlassian --overwrite haproxy.router.openshift.io/timeout=300s
-```
-```
-    oc annotate route confluence6-atlassian --overwrite confluence6-atlassian-confluence.e4ff.pro-eu-west-1.openshiftapps.com/timeout=300s
 ```
 
 ### Database drivers requirements
