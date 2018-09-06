@@ -7,7 +7,7 @@ ENV RUN_GROUP          root
 
 ENV UID ${RUN_USER}
 
-#ENV http_proxy http://user:passwordproxy.com:80
+#ENV http_proxy http://user:password@proxy.com:80
 #ENV https_proxy http://user:password@proxy.com:80
 
 # https://confluence.atlassian.com/doc/confluence-home-and-other-important-directories-590259707.html
