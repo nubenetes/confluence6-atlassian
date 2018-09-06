@@ -34,7 +34,19 @@
 * Origin Dockerfile based on the following dockerhub repo: https://hub.docker.com/r/atlassian/confluence-server/
 * This image has been developed and tested in the following environment:
     * **Openshift.com account** with 6GiB of RAM + 4GiB of persistent storage + 2Gib of Terminating Memory. 
-    * **quay.io** private Container Registry (where I build this Dockerfile). Openshift Secrets need to be setup to pull the Confluence6 image from this private registry.
+    * **quay.io** private Container Registry (where I build this Dockerfile). Openshift Secrets need to be setup to pull the Confluence6 image from this private registry:
+         - Resources -> Secrets -> Create Secret:
+            - Secret Type: Image Secret
+            - Secret Name: my_quay.io
+            - Authentication Type: Image Registry Credentials
+            - Image Registry Server Address: quay.io
+            - Username: my_username
+            - Password: my_password
+            - Email: my_email@addr.com
+            - Link secret to a service account: default
+        - Edit Deployment Config: 
+            - Image Name: quay.io/my_username/confluence6-atlassian:latest
+            - Advanced Image Options -> Pull Secret: my_quay.io
 * **confluence6-docker-build.Jenkinsfile**: Alternatively, this image can be built in a custom Jenkins Slave with docker + oc tools installed. (**Not built inside OpenShift**, you won't see **confluence6-atlassian-xx-build** in the ouput of **oc get pods**). The built image can be pushed to a private repo in Dockerhub or to Openshift Registry. This is achieved via a Conditional Build Step in the Jenkinsfile. 
 * **Docker Desktop Environment:** If you don't have admin rights in your laptop to install Docker for Windows, ask your company to install Virtualbox instead. A Desktop Test Environment can be a Virtual Machine with at least 4GB of RAM running in your laptop with Virtualbox:
     * Virtual Machine Option 1 - Docker Toolbox: https://docs.docker.com/toolbox/overview/
