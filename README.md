@@ -27,7 +27,7 @@
         - [Examples:](#examples)
 - [Known Errors](#known-errors)
     - [Spring Application context has not been set](#spring-application-context-has-not-been-set)
-    - [Using a Docker instance of Confluence. Installation Fails When Attempting to Install Database](#using-a-docker-instance-of-confluence.-installation-fails-when-attempting-to-install-database)
+    - [Installation Fails When Attempting to Install Database](#installation-fails-when-attempting-to-install-database)
 - [External References](#external-references)
 
 <!-- /TOC -->
@@ -240,7 +240,7 @@ Error from server (BadRequest): container "confluence6-atlassian" in pod "conflu
 # Known Errors
 ## Spring Application context has not been set
 This error is commonly seen when the user running Confluence is lacking permissions in the <confluence_home> directory or during a restart of a previous failed installation. The following link goes through all of those possibilities and provides resolution steps for for each of them: https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html
-## Using a Docker instance of Confluence. Installation Fails When Attempting to Install Database
+## Installation Fails When Attempting to Install Database
 - See "Openshift Requirements" section in this README.
 - https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
 
