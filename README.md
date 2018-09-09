@@ -46,6 +46,10 @@
             - Email: <my_email@addr.com>
             - Link secret to a service account: **default**
                 - Check this has been added to "imagePullSecrets" in: Resources -> Other Resources -> Service Account -> default -> Actions -> Edit YAML
+        - Deploy Image:
+            - Add to Project -> Deploy image -> click on "Image Name":
+                - quay.io: quay.io/<my_username>/<my_container_image_repository>
+                - hub.docker.com: docker.io/<my_username>/<my_container_image_repository>
         - Edit Deployment Config: 
             - Image Name: quay.io/<my_username>/<my_container_image_repository>:latest
             - Advanced Image Options -> Pull Secret: <my_quay.io>
