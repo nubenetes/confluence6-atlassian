@@ -40,7 +40,7 @@
             - Secret Type: Image Secret
             - Secret Name: <my_quay.io>
             - Authentication Type: Image Registry Credentials
-            - Image Registry Server Address: **quay.io**
+            - Image Registry Server Address: **quay.io**  (docker.io if you work with hub.docker.com container registry)
             - Username: <my_username>
             - Password: <my_password>
             - Email: <my_email@addr.com>
