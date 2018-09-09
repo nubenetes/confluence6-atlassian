@@ -27,6 +27,7 @@
         - [Examples:](#examples)
 - [Known Errors](#known-errors)
     - [Spring Application context has not been set](#spring-application-context-has-not-been-set)
+    - [Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database](#using-a-docker-instance-of-confluence,-installation-fails-when-attempting-to-install-database)
 - [External References](#external-references)
 
 <!-- /TOC -->
@@ -37,16 +38,16 @@
     * **quay.io** private Container Registry (where I build this Dockerfile). Openshift Secrets need to be setup to pull the Confluence6 image from this private registry:
          - Resources -> Secrets -> Create Secret:
             - Secret Type: Image Secret
-            - Secret Name: my_quay.io
+            - Secret Name: <my_quay.io>
             - Authentication Type: Image Registry Credentials
-            - Image Registry Server Address: quay.io
-            - Username: my_username
-            - Password: my_password
-            - Email: my_email@addr.com
-            - Link secret to a service account: default
+            - Image Registry Server Address: **quay.io**
+            - Username: <my_username>
+            - Password: <my_password>
+            - Email: <my_email@addr.com>
+            - Link secret to a service account: **default**
         - Edit Deployment Config: 
-            - Image Name: quay.io/my_username/confluence6-atlassian:latest
-            - Advanced Image Options -> Pull Secret: my_quay.io
+            - Image Name: quay.io/<my_username>/<my_container_image_repository>:latest
+            - Advanced Image Options -> Pull Secret: <my_quay.io>
 * **confluence6-docker-build.Jenkinsfile**: Alternatively, this image can be built in a custom Jenkins Slave with docker + oc tools installed. (**Not built inside OpenShift**, you won't see **confluence6-atlassian-xx-build** in the ouput of **oc get pods**). The built image can be pushed to a private repo in Dockerhub or to Openshift Registry. This is achieved via a Conditional Build Step in the Jenkinsfile. 
 * **Docker Desktop Environment:** If you don't have admin rights in your laptop to install Docker for Windows, ask your company to install Virtualbox instead. A Desktop Test Environment can be a Virtual Machine with at least 4GB of RAM running in your laptop with Virtualbox:
     * Virtual Machine Option 1 - Docker Toolbox: https://docs.docker.com/toolbox/overview/
@@ -55,7 +56,7 @@
 
 ## Alternatives: Other Docker images for Confluence 6 on Openshift 
 - https://github.com/mwaeckerlin/confluence : The Confluence docker image provided by Atlassian does not run on OpenShift due to the access rights. This image does. Also it is setup in a simpler way, than the original and about 100MB smaller in size.
-- https://github.com/org-binbab/openshift-confluence (Confluence 5 + MySQL)
+- https://github.com/org-binbab/openshift-confluence (Confluence 5 + MySQL connector)
 - https://github.com/opendevstack/ods-core : contains the core of open dev stack - infrastructure setup based on atlassian tooling, jenkins, nexus, sonarqube and shared images.
 - etc
 
@@ -77,7 +78,7 @@ user (it is different with docker) which cause the problem: application process 
     - Solution for Openshift's **Arbitrary User IDs**: For an image to support running as an arbitrary user, directories and files that may be written to by processes in the image should be owned by the root group and be read/writable by that group. Files to be executed should also have group execute permissions.
     - Confluence process needs to be run within the container with a non-root User ID that belongs to a root group (required to have write access to Confluence Home).
     - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
-    - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image.
+    - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image. (Note: "USER" declaration is finally not needed in this Dockerfile)
 
 #### Configuring Route Timeouts. Route Annotations
 - Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database:
@@ -239,6 +240,9 @@ Error from server (BadRequest): container "confluence6-atlassian" in pod "conflu
 # Known Errors
 ## Spring Application context has not been set
 This error is commonly seen when the user running Confluence is lacking permissions in the <confluence_home> directory or during a restart of a previous failed installation. The following link goes through all of those possibilities and provides resolution steps for for each of them: https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html
+## Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database
+- See "Openshift Requirements" section in this README.
+- https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
 
 
 # External References
