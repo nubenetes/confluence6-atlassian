@@ -16,7 +16,7 @@
             - [Microsoft SQL Server driver](#microsoft-sql-server-driver)
             - [MySQL driver](#mysql-driver)
             - [Oracle driver](#oracle-driver)
-        - [PostgreSQL container images](#postgreSQL-container-images)
+        - [PostgreSQL container images](#postgresql-container-images)
         - [Docker Engine running in your development environment](#docker-engine-running-in-your-development-environment)
     - [Pulling and running the container](#pulling-and-running-the-container)
     - [Running and connecting Frontend container and Backend container](#running-and-connecting-frontend-container-and-backend-container)
