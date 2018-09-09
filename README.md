@@ -219,7 +219,7 @@ oc logs pod/<pod-id>
 oc logs pod/confluence6-atlassian-13-868wb -n <openshift-namespace>
 oc logs pod/confluence6-atlassian-39-deploy -n <openshift-namespace>
 oc get is -n <openshift-namespace>
-oc get is
+oc get is  (Verify that the image stream was created)
 oc delete po,dc,rc,svc,route -n <openshift-namespace> <myapp>
 ```
 
