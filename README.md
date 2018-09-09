@@ -16,6 +16,7 @@
             - [Microsoft SQL Server driver](#microsoft-sql-server-driver)
             - [MySQL driver](#mysql-driver)
             - [Oracle driver](#oracle-driver)
+        - [PostgreSQL container images](#postgreSQL-container-images)
         - [Docker Engine running in your development environment](#docker-engine-running-in-your-development-environment)
     - [Pulling and running the container](#pulling-and-running-the-container)
     - [Running and connecting Frontend container and Backend container](#running-and-connecting-frontend-container-and-backend-container)
@@ -135,6 +136,17 @@ Confluence needs a driver to connect to Oracle. You'll need to:
 - Download the Oracle driver
 - Drop the .jar file in /opt/atlassian/confluence/confluence/WEB-INF/lib
 - Restart Confluence and continue the setup process.
+
+### PostgreSQL container images  
+- **docker pull rhscl/postgresql-95-rhel7** 
+    - PostgreSQL 9.5 SQL database server
+    - Container Image Based on Red Hat Software Collections 2.2
+- Official Postgres docker image: https://hub.docker.com/_/postgres/
+- https://hub.docker.com/r/centos/postgresql-95-centos7/
+- https://hub.docker.com/r/centos/postgresql-96-centos7/
+- **Postgres available in Openshift Catalog:** 
+    - https://github.com/sclorg/postgresql-container/
+    - PostgreSQL container images based on Red Hat Software Collections and intended for OpenShift and general usage. Users can choose between Red Hat Enterprise Linux, Fedora, and CentOS based images. http://softwarecollections.org
 
 ### Docker Engine running in your development environment
 - Requirement: $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions. 
