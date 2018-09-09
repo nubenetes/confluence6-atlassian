@@ -334,3 +334,7 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [stackoverflow.com: **OpenShift Service Proxy timeout**](https://stackoverflow.com/questions/47812807/openshift-service-proxy-timeout)
 * [docs.openshift.com: **Configuring Route Timeouts**](https://docs.openshift.com/container-platform/3.10/install_config/configuring_routing.html)
 * [docs.openshift.com: **The HAProxy Template Router**](https://docs.openshift.com/container-platform/3.10/architecture/networking/assembly_available_router_plugins.html#architecture-haproxy-router)
+* [stackify.com: **The Advantages of Using Kubernetes and Docker Together**](https://stackify.com/kubernetes-docker-deployments/)
+* [redhat.com: **How to gather and display metrics in Red Hat OpenShift**](https://www.redhat.com/en/blog/how-gather-and-display-metrics-red-hat-openshift)
+* [youtube.com: **OpenShift Origin is now OKD. Installation of OKD 3.10 from start to finish**](https://www.youtube.com/watch?v=ZkFIozGY0IA)
+* [redhat.com: How to Migrate Applications to Containers and OpenShift](https://www.redhat.com/en/about/videos/how-to-migrate-applications-to-containers-and-openshift)
