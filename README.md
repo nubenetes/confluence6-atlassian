@@ -72,7 +72,10 @@
 - etc
 
 ## Files in this repo
-* **confluence6-docker-build.Jenkinsfile**: Declarative Jenkinsfile for building and uploading the image to **Openshift-DEV, Dockerhub and Openshift-PROD**.
+* confluence6-docker-build.Jenkinsfile: Declarative Jenkinsfile for building and uploading the image to Openshift-DEV, Dockerhub and Openshift-PROD. Tip: A Docker Plugin for Jenkins can easily replace this Jenkinsfile.
+* Dockerfile
+* entrypoint.sh
+* jmxContext.xml : When enabled JMX is disabled (currently not used)
 
 ## Configuration
 ### Jenkins Slave Requirements
