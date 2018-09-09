@@ -34,7 +34,11 @@
 
 <!-- /TOC -->
 # HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Java Oracle
-* Dockerfile based on the following dockerhub repo: https://hub.docker.com/r/atlassian/confluence-server/
+* Modified Dockerfile based on the Official Confluence 6 Docker image: https://hub.docker.com/r/atlassian/confluence-server/
+* Aim: 
+    - Attempting to deploy Confluence 6 server using the Official Docker image within the “Openshift Container Platform”, a Kubernetes management and orchestration platform for Docker containers. 
+    - **Atlassian do not directly support Openshift.** 
+    - Atlassian support their own Docker container edition, however unless you are evaluating Confluence your image needs to be running using the Oracle JDK to meet the supported platform requirements, you’ll need to build your own image by following the [Update the Confluence Docker image to use Oracle JDK](https://confluence.atlassian.com/confkb/update-the-confluence-docker-image-to-use-oracle-jdk-829062521.html) steps here. 
 * This image has been developed and tested in the following environment:
     * **Openshift.com account** with 6GiB of RAM + 4GiB of persistent storage + 2Gib of Terminating Memory. 
     * **quay.io** private Container Registry (where I build this Dockerfile). Openshift Secrets need to be setup to pull the Confluence6 image from this private registry:
