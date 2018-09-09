@@ -10,7 +10,7 @@
         - [Container Requirements](#container-requirements)
         - [Openshift Requirements](#openshift-requirements)
             - [Support Arbitrary User IDs](#support-arbitrary-user-ids)
-            - [Configuring Route Timeouts](#configuring-route-timeouts)
+            - [Configuring HAProxy Timeouts with Route Annotations](#configuring-haproxy-timeouts-with-route-annotations)
         - [Database drivers requirements](#database-drivers-requirements)
             - [PostgreSQL driver](#postgresql-driver)
             - [Microsoft SQL Server driver](#microsoft-sql-server-driver)
@@ -80,8 +80,9 @@ user (it is different with docker) which cause the problem: application process 
     - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
     - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image. (Note: "USER" declaration is finally not needed in this Dockerfile)
 
-#### Configuring Route Timeouts. Route Annotations
-- Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database:
+#### Configuring HAProxy Timeouts with Route Annotations
+- Each POD has a reverse proxy default timeout that needs to be increased if we want to avoid the problem described below.
+- **Problem:** Using a Docker instance of Confluence, Installation Fails When Attempting to Install Database:
 https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
     - "The important point is to wait for another approx. 5 minutes before you reload or try to access the base url. If you reload or access the base url before, confluence would break down with the mentioned errors (Java Beans). But if you wait 5 minutes and reload after that you can proceed with the configuration. The problem seems to be that the configuration of the database continues in the background on the container, but is interrupted if confluence receives another http request."
     - "The solution proposed above was only a shortterm fix. A proper solution consists in changing the configuration of the reverse proxy. You have to increase the time limit the reverse proxy uses before it terminates an open session to something like 5 minutes instead of one minute."
@@ -241,7 +242,7 @@ Error from server (BadRequest): container "confluence6-atlassian" in pod "conflu
 ## Spring Application context has not been set
 This error is commonly seen when the user running Confluence is lacking permissions in the <confluence_home> directory or during a restart of a previous failed installation. The following link goes through all of those possibilities and provides resolution steps for for each of them: https://confluence.atlassian.com/confkb/confluence-does-not-start-due-to-spring-application-context-has-not-been-set-218278311.html
 ## Installation Fails When Attempting to Install Database
-- See [Configuring Route Timeouts](#configuring-route-timeouts).
+- See [Configuring HAProxy Timeouts with Route Annotations](#configuring-haproxy-timeouts-with-route-annotations).
 - https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
 
 
