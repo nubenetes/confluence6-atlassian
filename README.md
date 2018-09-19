@@ -101,28 +101,28 @@ https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-
     - "The important point is to wait for another approx. 5 minutes before you reload or try to access the base url. If you reload or access the base url before, confluence would break down with the mentioned errors (Java Beans). But if you wait 5 minutes and reload after that you can proceed with the configuration. The problem seems to be that the configuration of the database continues in the background on the container, but is interrupted if confluence receives another http request."
     - "The solution proposed above was only a shortterm fix. A proper solution consists in changing the configuration of the reverse proxy. You have to increase the time limit the reverse proxy uses before it terminates an open session to something like 5 minutes instead of one minute."
 ```
-    oc describe route confluence6-atlassian
-    Name:                   confluence6-atlassian
-    Namespace:              confluence
-    Created:                12 minutes ago
-    Labels:                 app=confluence6-atlassian
-    Annotations:            openshift.io/host.generated=true
-    Requested Host:         confluence6-atlassian-confluence.e4ff.pro-eu-west-1.openshiftapps.com
-                              exposed on router router (host elb.e4ff.pro-eu-west-1.openshiftapps.com) 12 minutes ago
-    Path:                   <none>
-    TLS Termination:        <none>
-    Insecure Policy:        <none>
-    Endpoint Port:          8090-tcp
+oc describe route confluence6-atlassian
+Name:                   confluence6-atlassian
+Namespace:              confluence
+Created:                12 minutes ago
+Labels:                 app=confluence6-atlassian
+Annotations:            openshift.io/host.generated=true
+Requested Host:         confluence6-atlassian-confluence.e4ff.pro-eu-west-1.openshiftapps.com
+                          exposed on router router (host elb.e4ff.pro-eu-west-1.openshiftapps.com) 12 minutes ago
+Path:                   <none>
+TLS Termination:        <none>
+Insecure Policy:        <none>
+Endpoint Port:          8090-tcp
 
-    Service:        confluence6-atlassian
-    Weight:         100 (100%)
-    Endpoints:      10.128.3.40:8090, 10.128.3.40:8091
+Service:        confluence6-atlassian
+Weight:         100 (100%)
+Endpoints:      10.128.3.40:8090, 10.128.3.40:8091
 ```
 ```
-    oc get all | grep routes
+oc get all | grep routes
 ```
 ``` 
-    oc annotate route confluence6-atlassian --overwrite haproxy.router.openshift.io/timeout=300s
+oc annotate route confluence6-atlassian --overwrite haproxy.router.openshift.io/timeout=300s
 ```
 
 ### Database drivers requirements
@@ -162,18 +162,18 @@ Confluence needs a driver to connect to Oracle. You'll need to:
 - **Notice: When mouting a directory from the host into the container, ensure that the mounted directory has the appropriate permissions and that the owner and group of the directory matches the user UID or name which is running inside the container.**
 - Solution: Make sure the host directory (filesystem/volume with confluence persistent data in the docker engine) is setup with the following permissions: 
 ```
-    chmod 775 /var/confluence6
+chmod 775 /var/confluence6
 ```
 These permissions will also be applied inside the container in the corresponding mapped filesystem (/var/atlassian/application-data/confluence)
 
 ## Pulling and running the container
 
 ```
-    docker login  
-    docker stop confluence6
-    docker rm confluence6
-    docker pull <username>/confluence6
-    docker run -v /var/confluence6:/var/atlassian/application-data/confluence --name="confluence6" -d -p 8090:8090 -p 8091:8091 cd/confluence6
+docker login  
+docker stop confluence6
+docker rm confluence6
+docker pull <username>/confluence6
+docker run -v /var/confluence6:/var/atlassian/application-data/confluence --name="confluence6" -d -p 8090:8090 -p 8091:8091 cd/confluence6
 ```
 ## Running and connecting Frontend container and Backend container 
 We need to connect Confluence and Postgresql containers running the same default "bridge" network (--net=bridge):
