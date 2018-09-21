@@ -59,7 +59,7 @@
         - Edit Deployment Config: 
             - Image Name: quay.io/<my_username>/<my_container_image_repository>:latest
             - Advanced Image Options -> Pull Secret: <my_quay.io>
-* **confluence6-docker-build.Jenkinsfile**: Alternatively, this image can be built in a custom Jenkins Slave with docker + oc tools installed. (**Not built inside OpenShift**, you won't see **confluence6-atlassian-xx-build** in the ouput of **oc get pods**). The built image can be pushed to a private repo in Dockerhub or to Openshift Registry. This is achieved via a Conditional Build Step in the Jenkinsfile. 
+* **confluence6-docker-build.Jenkinsfile**: Alternatively, this image can be built in a custom Jenkins Slave with docker + oc tools installed. (**Not built inside OpenShift**, you won't see **confluence6-atlassian-xx-build** in the ouput of **oc get pods**). The built image can be pushed to a private repo in Dockerhub or to Openshift Registry (Development or Production). This is achieved via a Conditional Build Step in Jenkinsfile **(stages are disabled)**. 
 * **Docker Desktop Environment:** If you don't have admin rights in your laptop to install Docker for Windows, ask your company to install Virtualbox instead. A Desktop Test Environment can be a Virtual Machine with at least 4GB of RAM running in your laptop with Virtualbox:
     * Virtual Machine Option 1 - Docker Toolbox: https://docs.docker.com/toolbox/overview/
     * Virtual Machine Option 2 - Fedora Osbox: https://www.osboxes.org/fedora/
@@ -72,7 +72,7 @@
 - etc
 
 ## Files in this repo
-* confluence6-docker-build.Jenkinsfile: Declarative Jenkinsfile for building and uploading the image to Openshift-DEV, Dockerhub and Openshift-PROD. Tip: A Docker Plugin for Jenkins can easily replace this Jenkinsfile.
+* confluence6-docker-build.Jenkinsfile: Declarative Jenkinsfile for building and uploading the image to Openshift-DEV, Dockerhub and Openshift-PROD (**Stages are disabled via Conditional Build Steps**). Tip: A Docker Plugin for Jenkins can easily replace this Jenkinsfile.
 * Dockerfile
 * entrypoint.sh
 * jmxContext.xml : When enabled JMX is disabled (currently not used)
