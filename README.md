@@ -348,6 +348,6 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [redhat.com: How to Migrate Applications to Containers and OpenShift (Video)](https://www.redhat.com/en/about/videos/how-to-migrate-applications-to-containers-and-openshift)
 * [developers.redhat.com: **Red Hat Container Development Kit** 🌟🌟🌟](https://developers.redhat.com/products/cdk/overview/)
 * [udemy.com: Red Hat OpenShift With Jenkins: DevOps For Beginners 🌟🌟](https://www.udemy.com/red-hat-openshift)
-* [udemy.com: Learn DevOps: The Complete Kubernetes Course](https://www.udemy.com/learn-devops-the-complete-kubernetes-course/learn/v4/overview)
+* [udemy.com: Learn DevOps: The Complete Kubernetes Course](https://www.udemy.com/learn-devops-the-complete-kubernetes-course)
 * [udemy.com: Learn DevOps: Advanced Kubernetes Usage](https://www.udemy.com/learn-devops-advanced-kubernetes-usage)
 * [udemy.com: Understanding Confluence for users, managers and admins](https://www.udemy.com/understanding-confluence-for-users-managers-and-admins/)
