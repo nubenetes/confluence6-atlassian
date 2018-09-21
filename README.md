@@ -30,7 +30,7 @@
     - [Spring Application context has not been set](#spring-application-context-has-not-been-set)
     - [Installation Fails When Attempting to Install Database](#installation-fails-when-attempting-to-install-database)
     - [Confluence will not start up because the build number in the home directory does not match the build number in the database after upgrade](#confluence-will-not-start-up-because-the-build-number-in-the-home-directory-does-not-match-the-build-number-in-the-database-after-upgrade)
-- [External References](#external-references)
+- [References](#references)
 
 <!-- /TOC -->
 # HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Oracle Java
@@ -277,7 +277,7 @@ This error is commonly seen when the user running Confluence is lacking permissi
     - This installation of Confluence has failed one or more bootstrap configuration checks. Please check the logs for details.
 - Solution: https://confluence.atlassian.com/confkb/confluence-will-not-start-up-because-the-build-number-in-the-home-directory-doesn-t-match-the-build-number-in-the-database-after-upgrade-376834096.html
 
-# External References
+# References
 * [Docker Pipeline Plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Pipeline+Plugin): Allows to build and use Docker containers from pipelines.
     * [plugins.jenkins.io: Docker Pipeline plugin](https://plugins.jenkins.io/docker-workflow)
     * [github.com: Docker Workflow Plugin](https://github.com/jenkinsci/docker-workflow-plugin)
