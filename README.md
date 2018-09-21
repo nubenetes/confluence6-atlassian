@@ -345,3 +345,4 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [redhat.com: **How to gather and display metrics in Red Hat OpenShift** (Prometheus + Grafana)](https://www.redhat.com/en/blog/how-gather-and-display-metrics-red-hat-openshift)
 * [youtube.com: **OpenShift Origin is now OKD. Installation of OKD 3.10 from start to finish** 🌟🌟🌟](https://www.youtube.com/watch?v=ZkFIozGY0IA)
 * [redhat.com: How to Migrate Applications to Containers and OpenShift (Video)](https://www.redhat.com/en/about/videos/how-to-migrate-applications-to-containers-and-openshift)
+* [developers.redhat.com: **Red Hat Container Development Kit** 🌟🌟🌟](https://developers.redhat.com/products/cdk/overview/)
