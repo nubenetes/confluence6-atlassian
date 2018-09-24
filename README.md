@@ -351,3 +351,4 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [udemy.com: Learn DevOps: The Complete Kubernetes Course 🌟🌟🌟🌟](https://www.udemy.com/learn-devops-the-complete-kubernetes-course)
 * [udemy.com: Learn DevOps: Advanced Kubernetes Usage 🌟🌟🌟🌟](https://www.udemy.com/learn-devops-advanced-kubernetes-usage)
 * [udemy.com: Understanding Confluence for users, managers and admins](https://www.udemy.com/understanding-confluence-for-users-managers-and-admins/)
+* [blog.openshift.com: Introducing Red Hat Quay 🌟](https://blog.openshift.com/introducing-red-hat-quay/)
