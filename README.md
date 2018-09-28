@@ -93,6 +93,7 @@ user (it is different with docker) which cause the problem: application process 
     - Confluence process needs to be run within the container with a non-root User ID that belongs to a root group (required to have write access to Confluence Home).
     - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
     - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image. (Note: "USER" declaration is finally not needed in this Dockerfile)
+- [americanexpress.io: **Do Not Run Dockerized Applications as Root** 🌟🌟🌟](https://americanexpress.io/do-not-run-dockerized-applications-as-root/)
 
 #### Configuring HAProxy Timeouts with Route Annotations
 - Each POD has a reverse proxy default timeout that needs to be increased if we want to avoid the problem described below.
