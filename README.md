@@ -300,6 +300,7 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [cloudbees.com: Declarative pipeline refcard](https://www.cloudbees.com/sites/default/files/declarative-pipeline-refcard.pdf)
 * [docs.openshift.com: **Creating Images in Openshift. Support Arbitrary User IDs**](https://docs.openshift.com/container-platform/3.9/creating_images/guidelines.html)
 * [OKD - docs.okd.io: **Creating images in Openshift. Support Arbitrary User IDs**](https://docs.okd.io/latest/creating_images/guidelines.html)
+* [americanexpress.io: **Do Not Run Dockerized Applications as Root** 🌟🌟🌟](https://americanexpress.io/do-not-run-dockerized-applications-as-root/)
 * [**OKD.io: The Origin Community Distribution of Kubernetes that powers Red Hat OpenShift** 🌟](https://www.okd.io/)
 * [okd.io: **Download oc Client Tools** 🌟](https://www.okd.io/download.html)
 * [blog.openshift.com: Deploying Applications from Images in OpenShift, Part One: Web Console](https://blog.openshift.com/deploying-applications-from-images-in-openshift-part-one-web-console/)
