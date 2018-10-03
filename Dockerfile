@@ -65,5 +65,5 @@ RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
 RUN chgrp -R 0 ${CONFLUENCE_INSTALL_DIR}/ ${CONFLUENCE_HOME}/ \
     && chmod -R g=u ${CONFLUENCE_INSTALL_DIR}/ ${CONFLUENCE_HOME}/ \
     && chmod g=u /etc/passwd /etc/group 
-#USER 1001  
+USER 1001  
 # End of Support Arbitrary User IDs
