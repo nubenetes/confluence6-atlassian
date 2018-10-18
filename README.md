@@ -2,7 +2,7 @@
 # Table of Contents
 <!-- TOC -->
 - [Table of Contents](#table-of-contents)
-- [HowTo Build a custom Confluence 6 docker image with a public dockerhub image as a base](#howto-build-a-custom-confluence-6-docker-image-with-a-public-dockerhub-image-as-a-base)
+- [HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Oracle Java](#howto-build-atlassian's-official-confluence-6-docker-image-to-make-it-work-in-openshift-and-with-oracle-java)
     - [Alternatives: Other Docker images for Confluence 6 on Openshift](#alternatives-other-docker-images-for-confluence-6-on-openshift)
     - [Files in this repo](#files-in-this-repo)
     - [Configuration](#configuration)
@@ -92,7 +92,7 @@ user (it is different with docker) which cause the problem: application process 
     - Solution for Openshift's **Arbitrary User IDs**: For an image to support running as an arbitrary user, directories and files that may be written to by processes in the image should be owned by the root group and be read/writable by that group. Files to be executed should also have group execute permissions.
     - Confluence process needs to be run within the container with a non-root User ID that belongs to a root group (required to have write access to Confluence Home).
     - $CONFLUENCE_HOME within the container needs to be setup with g+rwx permissions (root group) and with u+rwx permissions (non root user, the same uid that runs confluence process).
-    - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image. (Note: "USER" declaration is finally not needed in this Dockerfile)
+    - The final USER declaration in the Dockerfile should specify the user ID (numeric value) and not the user name. This allows OpenShift Container Platform to validate the authority the image is attempting to run with and prevent running images that are trying to run as root, because running containers as a privileged user exposes potential security holes. If the image does not specify a USER, it inherits the USER from the parent image. 
 - [americanexpress.io: Do Not Run Dockerized Applications as Root](https://americanexpress.io/do-not-run-dockerized-applications-as-root/)
 
 #### Configuring HAProxy Timeouts with Route Annotations
