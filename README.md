@@ -2,7 +2,7 @@
 # Table of Contents
 <!-- TOC -->
 - [Table of Contents](#table-of-contents)
-- [HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Oracle Java](#howto-build-atlassian-s-official-confluence-6-docker-image-to-make-it-work-in-openshift-and-with-oracle-java)
+- [HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Oracle Java](#howto-build-atlassian-official-confluence-6-docker-image-to-make-it-work-in-openshift-and-with-oracle-java)
     - [Alternatives: Other Docker images for Confluence 6 on Openshift](#alternatives-other-docker-images-for-confluence-6-on-openshift)
     - [Files in this repo](#files-in-this-repo)
     - [Configuration](#configuration)
@@ -33,7 +33,7 @@
 - [References](#references)
 
 <!-- /TOC -->
-# HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Oracle Java
+# HowTo Build Atlassian official Confluence 6 docker image to make it work in Openshift and with Oracle Java
 * Modified Dockerfile based on the Official Confluence 6 Docker image: https://hub.docker.com/r/atlassian/confluence-server/
 * Aim: 
     - Attempting to deploy Confluence 6 server using the Official Docker image within the “Openshift Container Platform”, a Kubernetes management and orchestration platform for Docker containers. 
