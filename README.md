@@ -2,7 +2,7 @@
 # Table of Contents
 <!-- TOC -->
 - [Table of Contents](#table-of-contents)
-- [HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Oracle Java](#howto-build-atlassian's-official-confluence-6-docker-image-to-make-it-work-in-openshift-and-with-oracle-java)
+- [HowTo Build Atlassian's official Confluence 6 docker image to make it work in Openshift and with Oracle Java](#howto-build-atlassian-s-official-confluence-6-docker-image-to-make-it-work-in-openshift-and-with-oracle-java)
     - [Alternatives: Other Docker images for Confluence 6 on Openshift](#alternatives-other-docker-images-for-confluence-6-on-openshift)
     - [Files in this repo](#files-in-this-repo)
     - [Configuration](#configuration)
