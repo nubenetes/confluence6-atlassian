@@ -29,7 +29,7 @@
 - [Known Errors](#known-errors)
     - [Spring Application context has not been set](#spring-application-context-has-not-been-set)
     - [Installation Fails When Attempting to Install Database](#installation-fails-when-attempting-to-install-database)
-    - [Upgrade from Confluence 5 to Confluence 6](#Upgrade/Migration-from-Confluence-5-to-Confluence-6)
+    - [Upgrade from Confluence 5 to Confluence 6](#Upgrade-from-Confluence-5-to-Confluence-6)
         - [Confluence will not start up because the build number in the home directory does not match the build number in the database after upgrade](#confluence-will-not-start-up-because-the-build-number-in-the-home-directory-does-not-match-the-build-number-in-the-database-after-upgrade)
 - [References](#references)
 
