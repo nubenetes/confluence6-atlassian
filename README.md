@@ -29,7 +29,8 @@
 - [Known Errors](#known-errors)
     - [Spring Application context has not been set](#spring-application-context-has-not-been-set)
     - [Installation Fails When Attempting to Install Database](#installation-fails-when-attempting-to-install-database)
-    - [Confluence will not start up because the build number in the home directory does not match the build number in the database after upgrade](#confluence-will-not-start-up-because-the-build-number-in-the-home-directory-does-not-match-the-build-number-in-the-database-after-upgrade)
+    - [Upgrade/Migration from Confluence 5 to Confluence 6](#Upgrade/Migration-from-Confluence-5-to-Confluence-6)
+        - [Confluence will not start up because the build number in the home directory does not match the build number in the database after upgrade](#confluence-will-not-start-up-because-the-build-number-in-the-home-directory-does-not-match-the-build-number-in-the-database-after-upgrade)
 - [References](#references)
 
 <!-- /TOC -->
@@ -270,7 +271,9 @@ This error is commonly seen when the user running Confluence is lacking permissi
 ## Installation Fails When Attempting to Install Database
 - See [Configuring HAProxy Timeouts with Route Annotations](#configuring-haproxy-timeouts-with-route-annotations).
 - https://community.atlassian.com/t5/Confluence-questions/Using-a-Docker-instance-of-Confluence-Installation-Fails-When/qaq-p/731543
-## Confluence will not start up because the build number in the home directory does not match the build number in the database after upgrade
+
+## Upgrade/Migration from Confluence 5 to Confluence 6
+### Confluence will not start up because the build number in the home directory does not match the build number in the database after upgrade
 - Scope: **Upgrade/Migration from Confluence 5 to Confluence 6**. Confluence 6 container is connected via JDBC URL to an external PostgreSQL database containing data of Confluence 5.x (modifying the file $CONFLUENCE_HOME/confluence.cfg.xml saved in a Persistent Volume Claim). This is the procedure to follow when upgrading the database schema during a Confluence migration from release 5.x to release 6.x.
 - Error:
     - Confluence had problems starting up: This page is for Confluence administrators. If you're seeing this page, your Confluence administrator is probably working to restore the service.
