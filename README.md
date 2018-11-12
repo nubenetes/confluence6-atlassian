@@ -1,4 +1,8 @@
 # Confluence 6 docker image for Openshift. Upgrade/Migration from Confluence 5 to Confluence 6
+<head>
+<meta property="og:image" content="https://raw.githubusercontent.com/inafevwork/confluence6-atlassian/master/images/confluence_logo.png">
+</head>
+
 # Table of Contents
 <!-- TOC -->
 - [Table of Contents](#table-of-contents)
