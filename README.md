@@ -1,5 +1,6 @@
 # Confluence 6 docker image for Openshift. Upgrade/Migration from Confluence 5 to Confluence 6
-<img alt="Confluence logo" src="images/confluence_logo.png"> 
+<img alt="Confluence logo" src="images/confluence_logo.png">
+<img alt="docker kubernetes openshift logo" src="images/docker_kubernetes_openshift.png">
 <head>
 <meta property="og:image" content="https://raw.githubusercontent.com/inafevwork/confluence6-atlassian/master/images/confluence_logo.png">
 </head>
