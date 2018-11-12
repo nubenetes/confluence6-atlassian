@@ -2,12 +2,10 @@
 
 <center>
 
-|[![puppetlabs_video](images/confluence_logo.png)](https://www.youtube.com/user/PuppetLabsInc)|[![ansible_videos](images/docker_kubernetes_openshift.png)](https://www.youtube.com/channel/UCeImQ-jeVhzgLJd9wsqo8Sg)|
+|[![Confluence Video](images/confluence_logo.png)](https://www.youtube.com/user/GoAtlassian)|[![openshift videos](images/docker_kubernetes_openshift.png)](https://www.youtube.com/user/rhopenshift)|
 |:---:|:---:|
 
 </center>
-<img alt="Confluence logo" src="images/confluence_logo.png">
-<img alt="docker kubernetes openshift logo" src="images/docker_kubernetes_openshift.png">
 <head>
 <meta property="og:image" content="https://raw.githubusercontent.com/inafevwork/confluence6-atlassian/master/images/confluence_logo.png">
 </head>
