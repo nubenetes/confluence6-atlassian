@@ -42,6 +42,7 @@
     - [Installation Fails When Attempting to Install Database](#installation-fails-when-attempting-to-install-database)
     - [Upgrade from Confluence 5 to Confluence 6](#Upgrade-from-Confluence-5-to-Confluence-6)
         - [Confluence will not start up because the build number in the home directory does not match the build number in the database after upgrade](#confluence-will-not-start-up-because-the-build-number-in-the-home-directory-does-not-match-the-build-number-in-the-database-after-upgrade)
+- [Validation](#validation)
 - [References](#references)
 
 <!-- /TOC -->
@@ -291,6 +292,9 @@ This error is commonly seen when the user running Confluence is lacking permissi
     - Confluence will not start up because the build number in the home directory [7801] doesn't match the build number in the database [6223]
     - This installation of Confluence has failed one or more bootstrap configuration checks. Please check the logs for details.
 - Solution: https://confluence.atlassian.com/confkb/confluence-will-not-start-up-because-the-build-number-in-the-home-directory-doesn-t-match-the-build-number-in-the-database-after-upgrade-376834096.html
+
+## Validation
+[![Confluence6 updgrade](images/confluence6_upgrade.png)]
 
 # References
 * [Docker Pipeline Plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Pipeline+Plugin): Allows to build and use Docker containers from pipelines.
