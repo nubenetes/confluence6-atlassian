@@ -293,8 +293,8 @@ This error is commonly seen when the user running Confluence is lacking permissi
     - This installation of Confluence has failed one or more bootstrap configuration checks. Please check the logs for details.
 - Solution: https://confluence.atlassian.com/confkb/confluence-will-not-start-up-because-the-build-number-in-the-home-directory-doesn-t-match-the-build-number-in-the-database-after-upgrade-376834096.html
 
-## Validation
-[![Confluence Upgrade](images/confluence6_upgrade.png)]
+# Validation
+![Confluence Upgrade](images/confluence6_upgrade.png)
 
 # References
 * [Docker Pipeline Plugin](https://wiki.jenkins.io/display/JENKINS/Docker+Pipeline+Plugin): Allows to build and use Docker containers from pipelines.
