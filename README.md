@@ -1,4 +1,4 @@
-# Confluence 6 docker image for Openshift. Upgrade/Migration from Confluence 5 to Confluence 6
+# Confluence 6 docker image for Openshift 3.10 . Upgrade/Migration from Confluence 5 to Confluence 6
 
 <center>
 
