@@ -376,6 +376,6 @@ This error is commonly seen when the user running Confluence is lacking permissi
 # Atlassian in OpenShift:
 * [Official Docker images in Docker Hub](https://hub.docker.com/r/atlassian/jira-software/)
 * [Atlassian Docker Source Code](https://bitbucket.org/atlassian-docker/)
-* [Provide official Docker images for Jira](https://jira.atlassian.com/browse/JRASERVER-63993)
-* [Support OpenShift / Kubernetes](https://jira.atlassian.com/browse/JRASERVER-69931)
+* [Provide official Docker images for Jira 🌟🌟🌟](https://jira.atlassian.com/browse/JRASERVER-63993)
+* [Support OpenShift/Kubernetes 🌟🌟🌟](https://jira.atlassian.com/browse/JRASERVER-69931)
 * [Implementation of New Features Policy](https://jira.atlassian.com/browse/JRASERVER-69931) 
