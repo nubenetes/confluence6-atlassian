@@ -372,3 +372,10 @@ This error is commonly seen when the user running Confluence is lacking permissi
 * [udemy.com: Learn DevOps: Advanced Kubernetes Usage 🌟🌟🌟🌟](https://www.udemy.com/learn-devops-advanced-kubernetes-usage)
 * [udemy.com: Understanding Confluence for users, managers and admins](https://www.udemy.com/understanding-confluence-for-users-managers-and-admins/)
 * [blog.openshift.com: Introducing Red Hat Quay 🌟](https://blog.openshift.com/introducing-red-hat-quay/)
+
+# Atlassian in OpenShift:
+* [Official Docker images in Docker Hub](https://hub.docker.com/r/atlassian/jira-software/)
+* [Atlassian Docker Source Code](https://bitbucket.org/atlassian-docker/)
+* [Provide official Docker images for Jira](https://jira.atlassian.com/browse/JRASERVER-63993)
+* [Support OpenShift / Kubernetes](https://jira.atlassian.com/browse/JRASERVER-69931)
+* [Implementation of New Features Policy](https://jira.atlassian.com/browse/JRASERVER-69931) 
